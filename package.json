@@ -49,7 +49,8 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "testMatch": [
-      "<rootDir>/lib/calculators/__tests__/**/*.test.ts"
+      "<rootDir>/lib/calculators/__tests__/**/*.test.ts",
+      "<rootDir>/lib/assistant/__tests__/**/*.test.ts"
     ],
     "moduleFileExtensions": [
       "ts",

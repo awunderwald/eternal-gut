@@ -18,6 +18,7 @@ import {
   bsaMosteller,
   scrMgDlToUmolL,
 } from '../../lib/calculators';
+import { useSaveCalculation } from '../../lib/hooks';
 import { colors, spacing, typography } from '../../theme/tokens';
 
 type FieldSpec = {
@@ -96,6 +97,7 @@ export default function CalculatorDetail() {
   const [values, setValues] = useState<Record<string, string>>({});
   const [result, setResult] = useState<CalcResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const saveCalc = useSaveCalculation();
 
   function onCalculate() {
     if (!id) return;
@@ -103,6 +105,7 @@ export default function CalculatorDetail() {
       const r = runCalculator(id, values);
       setResult(r);
       setError(null);
+      saveCalc.mutate({ calculatorType: id, inputs: values, result: r });
     } catch (e) {
       setResult(null);
       setError(e instanceof Error ? e.message : 'Error de cálculo');

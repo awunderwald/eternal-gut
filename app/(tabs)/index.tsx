@@ -35,6 +35,16 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.sectionHeader}>
+        <Text style={styles.sectionLabel}>Asistente</Text>
+      </View>
+      <Link href="/asistente" asChild>
+        <Card style={styles.guidePlaceholder} onPress={() => {}}>
+          <Text style={styles.guideTitle}>¿Qué examen pedir?</Text>
+          <Text style={styles.guideSubtitle}>Lookup síntomas → estudios según protocolo.</Text>
+        </Card>
+      </Link>
+
+      <View style={styles.sectionHeader}>
         <Text style={styles.sectionLabel}>Guías técnicas</Text>
       </View>
       <Card style={styles.guidePlaceholder} padded>

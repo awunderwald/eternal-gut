@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Card } from '../../components/Card';
@@ -27,13 +28,15 @@ export default function ProfileScreen() {
         </View>
       </View>
 
-      <Card style={styles.premium}>
-        <Text style={styles.premiumLabel}>PREMIUM · SOLAREM</Text>
-        <Text style={styles.premiumTitle}>Desbloquea protocolos RM</Text>
-        <Text style={styles.premiumSub}>
-          Cursos 2026: Neuro RM, Próstata PI-RADS 2.1, Cuerpo.
-        </Text>
-      </Card>
+      <Link href="/premium" asChild>
+        <Card style={styles.premium} onPress={() => {}}>
+          <Text style={styles.premiumLabel}>PREMIUM · SOLAREM</Text>
+          <Text style={styles.premiumTitle}>Desbloquea protocolos RM</Text>
+          <Text style={styles.premiumSub}>
+            Cursos 2026: Neuro RM, Próstata PI-RADS 2.1, Cuerpo.
+          </Text>
+        </Card>
+      </Link>
 
       <View style={styles.menu}>
         {MENU.map((m) => (

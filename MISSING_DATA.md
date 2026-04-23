@@ -25,13 +25,15 @@ Lo que necesito de tu lado para cerrar el MVP. Marcado por bloqueador (🔴 crí
 ## 🟠 Importantes
 
 6. **Catálogo de guías iniciales** (objetivo: 50)
-   - Por cada guía: título, categoría (rayos/TAC/RM), kVp, mAs, DFP, colimación, criterios de evaluación, imagen de ejemplo.
-   - Plantilla JSON disponible en el tipo `Guide` (`types/index.ts`).
-   - ¿Quién las redacta? ¿Existe ya un Notion/Google Doc con borradores?
+   - ✅ 10 guías Rx seeded en `0002_seed_guides.sql` (Tórax PA/lat, abdomen, cervical AP/lat, rodilla AP/lat, mano PA, cadera AP, sacroilíaca).
+   - Faltan: ~20 Rx adicionales (tobillo, hombro, pelvis, pie, calcáneo, cráneo, etc.), 15 TAC, 15 RM.
+   - ¿Querés que siga redactándolas o las revisa primero un TM senior?
+   - Para las imágenes de ejemplo necesitamos un bucket en Supabase Storage.
 7. **Asistente de exámenes (AI-assist)**
-   - ¿Mapa síntomas → exámenes manual (lookup table) o LLM?
-   - Si LLM: ¿Claude vía Anthropic API, costos compartidos quién paga?
-   - Casos de uso prioritarios (ej: dolor torácico + disnea + 60 años, HTA → AngioTAC tórax).
+   - ✅ Implementado como lookup de reglas (7 síndromes cubiertos): dolor torácico, TEC, lumbago con banderas rojas, abdomen agudo (con variantes embarazo/ERC), trauma extremidad, cefalea en trueno, disuria en mujer.
+   - Cero costo de API, funciona offline, trazable. Versión `Asistente-LookUp-v1`.
+   - **Decisión pendiente:** ¿agregamos más reglas (política de expansión) o migramos a Claude API cuando el volumen lo justifique?
+   - Sugerencia: quedarse en lookup hasta los 10k MAU. Cada nueva regla pasa por revisor médico.
 8. **Modelo de monetización Solarem**
    - Precio confirmado: $9.990 CLP/mes.
    - ¿Qué bloquea exactamente el paywall? Sugerencia actual: guías premium + contenido de cursos RM.

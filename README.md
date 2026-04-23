@@ -10,7 +10,7 @@ App móvil para Tecnólogos Médicos (TM) en Chile y LatAm. Unifica calculadoras
 ```
 tecnolog-one/
 ├── app/                           Expo Router (file-based nav)
-│   ├── _layout.tsx                Root (providers, stack)
+│   ├── _layout.tsx                Root (providers, stack, modals)
 │   ├── (tabs)/                    Tabs principales
 │   │   ├── _layout.tsx
 │   │   ├── index.tsx              Home
@@ -18,6 +18,10 @@ tecnolog-one/
 │   │   ├── guides.tsx             Guías (rayos / TAC / RM)
 │   │   ├── community.tsx          Foro (feed)
 │   │   └── profile.tsx            Perfil + Premium Solarem
+│   ├── auth/                      Sign in / sign up
+│   ├── onboarding/                3 pantallas paginadas
+│   ├── asistente.tsx              Síntomas → exámenes sugeridos
+│   ├── premium.tsx                Paywall Solarem (modal)
 │   └── calculators/[id].tsx       Detalle dinámico de calculadora
 ├── components/                    Design system
 │   ├── Button.tsx
@@ -27,6 +31,8 @@ tecnolog-one/
 │   └── ScreenHeader.tsx
 ├── lib/
 │   ├── supabase.ts                Cliente + persistencia AsyncStorage
+│   ├── hooks/                     React Query: auth, guides, forum, history
+│   ├── assistant/                 Motor de reglas síntomas→exámenes + tests
 │   └── calculators/               8 calculadoras puras + tests
 │       ├── ckd-epi.ts             TFG CKD-EPI 2021 (sin factor raza)
 │       ├── cockcroft-gault.ts
@@ -41,7 +47,9 @@ tecnolog-one/
 ├── theme/tokens.ts                Colores #005EB8 / #00A86B, Inter
 ├── types/index.ts                 Profile, Guide, ForumPost…
 ├── supabase/
-│   └── migrations/0001_init.sql   Schema + RLS + Realtime + audit
+│   └── migrations/
+│       ├── 0001_init.sql          Schema + RLS + Realtime + audit
+│       └── 0002_seed_guides.sql   10 guías Rx (SERAM/ACR)
 ├── assets/                        (pendiente: íconos + splash)
 ├── app.json
 ├── babel.config.js
@@ -161,12 +169,14 @@ Los JS updates salen sin revisión de store (ideal para correcciones de contenid
 npm test
 ```
 
-**26/26 tests pasan** (CKD-EPI, Cockcroft-Gault, contraste, vejiga, EQD2, IMC, BSA, conversiones + disclaimer obligatorio).
+**36/36 tests pasan** en 2 suites:
+- Calculadoras (26): CKD-EPI, Cockcroft-Gault, contraste, vejiga, EQD2, IMC, BSA, conversiones + disclaimer obligatorio.
+- Asistente (10): dolor torácico+TEP, TEC, lumbago con banderas rojas, abdomen agudo (incluye embarazo/ERC), trauma extremidad, cefalea en trueno, versión + disclaimer.
 
 ## Roadmap
 
-- **Fase 1 (actual):** Auth + 8 calculadoras + historial ✅ (lógica lista, falta integrar UI con Supabase)
-- **Fase 2:** 50 guías de rayos/TAC/RM (JSON offline)
-- **Fase 3:** Foro con Realtime + Premium Solarem + onboarding pulido
+- **Fase 1 (actual):** Auth ✅ + 8 calculadoras ✅ + historial ✅ + Asistente lookup ✅
+- **Fase 2:** 10 guías Rx seeded ✅, faltan 40 (TAC + RM + más proyecciones)
+- **Fase 3:** Foro Realtime ✅ (hooks listos), Premium Solarem ✅ (pantalla, falta IAP), onboarding ✅
 
 Detalle de lo que aún falta: [MISSING_DATA.md](./MISSING_DATA.md).
