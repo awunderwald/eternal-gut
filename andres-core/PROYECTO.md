@@ -306,7 +306,11 @@ Python venv, git, llaves API, `hola_claude.py`, estructura de carpetas.
 - **Código y nombres:** inglés
 - **Commits:** convencionales en inglés
 - **System prompts:** versionados en `/src/agents/prompts/*.md`
-- **Secretos:** `.env`, nunca en código, nunca commited
+- **Secretos:** `.env`, nunca en código, nunca commited. **Nunca pegar API
+  keys, contraseñas ni passphrases en chats con agentes** (Claude.ai web,
+  Claude Code, etc.) — los chats son canales logueados. Para actualizar
+  `ANTHROPIC_API_KEY`, usar `python scripts/set_api_key.py`, que lee del
+  portapapeles del Mac sin pasar por chat.
 - **Decisiones técnicas nuevas:** ADR en `/docs/decisiones/NNNN-titulo.md`
 
 ## 14. Glosario
