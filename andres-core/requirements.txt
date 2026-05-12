@@ -1,0 +1,34 @@
+# =========================================================================
+# Andrés Core — dependencias Fase 0
+# Pinneadas con ~= para permitir bugfixes pero no breaking changes.
+# Versiones revisadas: mayo 2026.
+# =========================================================================
+
+# LLM providers
+anthropic~=0.40
+openai~=1.55
+
+# Config
+python-dotenv~=1.0
+
+# Backend (Fase 1+, ya instalado para usar el venv en todas las fases)
+fastapi~=0.115
+uvicorn[standard]~=0.32
+pydantic~=2.9
+
+# Persistencia (Fase 1+)
+supabase~=2.9
+
+# Cifrado app-level
+cryptography~=43.0
+
+# Cola async (Fase 2+)
+redis~=5.2
+rq~=2.0
+
+# HTTP client
+httpx~=0.27
+
+# Utilidades comunes
+tenacity~=9.0
+structlog~=24.4

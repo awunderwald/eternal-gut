@@ -1,0 +1,66 @@
+# Secrets — NUNCA commitear
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+credentials.json
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+.eggs/
+build/
+dist/
+
+# Virtual envs
+venv/
+.venv/
+env/
+ENV/
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node (por si entra UI)
+node_modules/
+npm-debug.log*
+
+# Logs
+*.log
+logs/
+
+# Datos locales / runtime
+data/local/
+*.sqlite
+*.db
+.langfuse/
+
+# Plaud / transcripciones crudas (sensible)
+transcripts/raw/
+audio/
