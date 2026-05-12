@@ -201,6 +201,17 @@ CREATE TABLE tool_permissions (
 - `agendar_hora_externa` (dentista, peluquería, gym) — irreversible
 - `comprar_online` — irreversible (alto riesgo)
 - `consultar_web` (precios, info pública) — reversible
+- `estudio_de_mercado` (loguearse en sitios, recorrer formularios, extraer
+  datos comparativos de productos, precios, competencia, regulación INAPI,
+  ISP, fichas técnicas de proveedores) — reversible (solo lectura) o
+  irreversible si requiere completar formularios. Cobertura inicial:
+  Mercado Libre Chile, Cornershop/Uber, sitios de competidores, Linio,
+  PubMed/SciELO, INAPI, ISP, Sernac. Extensible a cualquier sitio que
+  requiera login + interacción con opciones.
+- `gestionar_redes_sociales` (Instagram, Facebook, TikTok, X) — leer DMs
+  e interacciones, redactar respuestas, programar posts, coordinar con
+  community manager (@defaia.cl). Cada subacción con su nivel A/B/C
+  propio.
 
 ### Telefonía (Fase 7+)
 - `llamar_voz_generica` — irreversible
@@ -210,6 +221,8 @@ CREATE TABLE tool_permissions (
 - `buscar_biblioteca_clinica` — read-only
 - `buscar_web_pubmed` — read-only
 - `generar_review_prisma` — read-only
+- `inteligencia_competitiva` (combina `estudio_de_mercado` + RAG sobre los
+  resultados acumulados, con reportes ejecutivos periódicos) — read-only
 
 ## 9. Roadmap por fases
 
@@ -247,10 +260,27 @@ Python venv, git, llaves API, `hola_claude.py`, estructura de carpetas.
 - Integración con n8n + WhatsApp Business existente (sucesor OpenClaw)
 - Reporte diario AM/PM
 
-### Fase 6 — Browser automation (2-3 sesiones)
-- Playwright integrado
-- Casos de uso: agendar hora externa, consultar precios, comprar online
-- Empezar con páginas chilenas conocidas
+### Fase 6 — Browser automation + estudio de mercado (3-4 sesiones)
+- Playwright integrado (con Browserbase opcional para sitios anti-bot)
+- Bóveda de credenciales cifrada (`vault.py`) para logins autorizados por Andrés
+- Casos de uso:
+  - `agendar_hora_externa` (dentista, peluquería, gym)
+  - `consultar_precios` (read-only, alta frecuencia)
+  - `comprar_online` (estricto nivel A indefinido)
+  - `estudio_de_mercado` con login: navega, marca opciones, descarga datos
+    estructurados, consolida en silo `negocios` para análisis posterior
+  - `inteligencia_competitiva`: corre `estudio_de_mercado` periódicamente
+    (semanal/mensual) y entrega reportes ejecutivos con cambios detectados
+- Empezar con páginas chilenas conocidas (Mercado Libre, INAPI, ISP, Sernac,
+  competidores directos de LuminaDerm)
+
+### Fase 6.5 — Redes sociales (2 sesiones)
+- Conectores Instagram, Facebook, TikTok, X (preferir APIs oficiales sobre
+  scraping; usar Playwright cuando no haya API)
+- Lectura de DMs y comentarios → ingesta a silo `negocios`
+- Drafts de respuesta (nivel A inicial; B cuando el patrón sea estable)
+- Coordinación con @defaia.cl: el agente propone, defaia revisa y publica
+- Posts programados solo nivel A indefinido (alto riesgo reputacional)
 
 ### Fase 7 — Voice (entrante + saliente genérica) (2-3 sesiones, opcional)
 - Llamada entrante: tú llamas al agente, le hablas, te responde
@@ -278,6 +308,8 @@ Python venv, git, llaves API, `hola_claude.py`, estructura de carpetas.
 | Voz clonada → posible delito de estafa si genera perjuicio | Fase 8 condicional; evaluación legal previa explícita |
 | Agente envía mail incorrecto a paciente | Sistema permisos A/B/C; toda tool de comunicación a paciente entra en A; degradación automática |
 | Browser automation hace compra incorrecta | Tool en A indefinidamente; aprobación humana antes de checkout |
+| Estudio de mercado / scraping viola ToS de sitios | Preferir APIs oficiales; respetar robots.txt y rate limits; usar credenciales propias autorizadas (no falsas); evitar volumetría que parezca ataque; revisar legalidad caso a caso |
+| Redes sociales: post incorrecto daña reputación | `gestionar_redes_sociales` para publicar entra en nivel A indefinido; defaia.cl como humano-en-el-loop |
 
 ## 11. Decisiones tomadas
 
