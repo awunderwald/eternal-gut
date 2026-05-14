@@ -9,13 +9,30 @@
 
 ## 1. Visión
 
-Construir **"Andrés Core"**: un sistema operativo personal con IA que actúa como un *Andrés Wunderwald con esteroides*. Un agente que vive con él 24/7, ingiere todo lo que él dice/escribe/recibe a lo largo del día, entiende sus compromisos antes de que él los recuerde, y actúa proactivamente para ahorrarle tiempo —dentro de límites de autonomía que él controla quirúrgicamente.
+Construir **"Andrés Core"**: una **extensión digital del Dr. Andrés Wunderwald
+como persona completa**, no solo como dermatólogo. Un agente que vive con él
+24/7, ingiere todo lo que él dice/escribe/recibe, entiende sus compromisos
+antes de que él los recuerde, y actúa proactivamente para liberarle vida —
+dentro de límites de autonomía que él controla quirúrgicamente.
+
+**Las 4 dimensiones donde el sistema debe ser extensión:**
+1. **Tiempo y energía** — protege su calendario, detecta fugas, prioriza.
+2. **Relaciones** — memoria total de las personas que importan, contexto antes
+   de cada conversación, coordinación familiar.
+3. **Decisiones** — segundo cerebro que enmarca decisiones grandes con base en
+   sus patrones históricos.
+4. **Burocracia** — llena formularios, persigue cobros, maneja correspondencia
+   legal/administrativa.
+
+La práctica clínica (sucesor de OpenClaw) y el research dermatológico son
+**pistas adicionales**, no el centro. El centro es Andrés-persona.
 
 **Fusiona en un solo cerebro:**
-- Lo que hoy hace OpenClaw (intake de pacientes vía WhatsApp/ManyChat)
+- Asistente personal (transcripciones del día, fugas de tiempo, decisiones)
+- Coordinación familiar (Rafaela, co-parenting, calendario compartido)
+- Asistente administrativo (SII, banco, ISP, INAPI, Santa Catalina, cobros)
 - Asistente clínico (literatura, dx diferencial, reviews PRISMA, informes)
-- Asistente personal (transcripciones del día, recordatorios, agendamientos externos)
-- Asistente administrativo (Santa Catalina, precios, post-venta)
+- Sucesor de OpenClaw (intake de pacientes vía WhatsApp, con más contexto)
 - Asistente ejecutivo (mail, calendario, navegación web, llamadas)
 
 **No es:** un chatbot, un workflow de n8n, ni un wrapper de Claude API. Es un **sistema con memoria persistente, compartimentos por contexto, capacidad de actuar autónomamente, y un protocolo de gobernanza de permisos.**
@@ -226,6 +243,12 @@ CREATE TABLE tool_permissions (
 
 ## 9. Roadmap por fases
 
+> **Principio de prioridad (decidido 12 mayo 2026):** El roadmap se ordena
+> **extension-personal-first**, no clínica-first. Las 6 capacidades priorizadas
+> son: Detector de fugas, CRM personal, Guardián de calendario, Coordinador
+> familiar, Segundo cerebro, Asesino de burocracia. OpenClaw mejorado entra
+> después porque OpenClaw actual ya funciona — no es bloqueante.
+
 ### Fase 0 — Setup ambiente (1-2 horas)
 Python venv, git, llaves API, `hola_claude.py`, estructura de carpetas.
 
@@ -235,60 +258,72 @@ Python venv, git, llaves API, `hola_claude.py`, estructura de carpetas.
 - Cifrado app-level configurado
 - System prompts base por silo
 - Solo nivel A para todo
+- **Silos prioritarios al construir primero:** `personal_intimo` y
+  `personal_familia` (no `pacientes` todavía).
 
-### Fase 2 — Ingesta Plaud vía Zapier (1 sesión)
-- Endpoint FastAPI que recibe webhook Zapier
+### Fase 2 — Ingesta Plaud + Detector de fugas (2 sesiones) 🎯 P1
+- Endpoint FastAPI que recibe webhook Zapier desde Plaud
 - Pipeline: chunk → clasificar silo → embedding → guardar
 - Agente puede responder preguntas sobre transcripciones del día
-- Reporte diario automático por email/Telegram
+- **Capacidad priorizada: "Detector de fugas de tiempo"** — análisis semanal
+  de tus 16h/día de Plaud que muestra dónde se te fue el tiempo, en qué
+  estuviste en flow, en qué drenado
+- Reporte diario AM por email/Telegram + reporte semanal de fugas
 
-### Fase 3 — Sistema de permisos completo + primeras tools (2 sesiones)
-- Tabla `tool_permissions` operativa
-- Lógica de promoción/degradación
+### Fase 3 — Sistema de permisos + Gmail/Calendar (2 sesiones)
+- Tabla `tool_permissions` operativa con lógica A/B/C reversible
 - Comandos manuales para gestionar permisos
-- Tools iniciales: `crear_recordatorio`, `crear_draft_email`, `consultar_calendario`
+- Ingesta de Gmail y Google Calendar (MCP)
+- Tools iniciales: `crear_recordatorio`, `crear_draft_email`,
+  `consultar_calendario`, `crear_evento_calendario`
 - Toda tool entra en A
 
-### Fase 4 — Multi-agente orquestado (2-3 sesiones)
-- Router de contexto
-- Agentes especializados con system prompts propios
-- Handoff entre silos
+### Fase 4 — CRM personal + Guardián de calendario (2-3 sesiones) 🎯 P1
+- Silo `personas`: entidades con su historia, última conversación, contexto
+- **Capacidad priorizada: "CRM personal"** — antes de cada conversación o
+  reunión, te entrega un brief con lo último que hablaron, compromisos
+  pendientes, datos personales relevantes
+- **Capacidad priorizada: "Guardián de calendario"** — defiende tu tiempo;
+  cuando alguien pide reunión, contesta en tu nombre proponiendo / declinando
+  según tus reglas. Nivel B inicial (drafts), C cuando estable
+- Multi-agente orquestado (router de contexto, handoffs entre silos)
+
+### Fase 5 — Coordinador familiar + Segundo cerebro (2 sesiones) 🎯 P1
+- **Capacidad priorizada: "Coordinador familiar"** — silo `personal_familia`
+  con calendario compartido virtual con la mamá de Rafaela; recordatorios
+  de colegio, médicos, cumpleaños, turnos; coordinación de logística
+- **Capacidad priorizada: "Segundo cerebro"** — para cualquier decisión
+  grande, enmarca opciones con base en patrones históricos tuyos
+  (compromisos previos, niveles de carga, decisiones similares pasadas)
 - Migración Plaud Zapier → OpenPlaud self-hosted
 
-### Fase 5 — Tools de comunicación y agenda (2 sesiones)
-- `enviar_email`, `responder_whatsapp_paciente`, `crear_evento_calendario`
-- Integración con n8n + WhatsApp Business existente (sucesor OpenClaw)
-- Reporte diario AM/PM
-
-### Fase 6 — Browser automation + estudio de mercado (3-4 sesiones)
+### Fase 6 — Browser automation + Asesino de burocracia (3-4 sesiones) 🎯 P1
 - Playwright integrado (con Browserbase opcional para sitios anti-bot)
-- Bóveda de credenciales cifrada (`vault.py`) para logins autorizados por Andrés
-- Casos de uso:
-  - `agendar_hora_externa` (dentista, peluquería, gym)
-  - `consultar_precios` (read-only, alta frecuencia)
-  - `comprar_online` (estricto nivel A indefinido)
-  - `estudio_de_mercado` con login: navega, marca opciones, descarga datos
-    estructurados, consolida en silo `negocios` para análisis posterior
-  - `inteligencia_competitiva`: corre `estudio_de_mercado` periódicamente
-    (semanal/mensual) y entrega reportes ejecutivos con cambios detectados
-- Empezar con páginas chilenas conocidas (Mercado Libre, INAPI, ISP, Sernac,
-  competidores directos de LuminaDerm)
+- Bóveda de credenciales cifrada (`vault.py`)
+- **Capacidad priorizada: "Asesino de burocracia"** — llena formularios de
+  SII, banco, ISP, INAPI, SERNAC; persigue cobros pendientes; paga
+  proveedores LuminaDerm recurrentes; redacta y responde oficios USACH /
+  contraloría con tus precedentes
+- También: `agendar_hora_externa`, `consultar_precios`, `comprar_online`,
+  `estudio_de_mercado`, `inteligencia_competitiva`
 
 ### Fase 6.5 — Redes sociales (2 sesiones)
-- Conectores Instagram, Facebook, TikTok, X (preferir APIs oficiales sobre
-  scraping; usar Playwright cuando no haya API)
-- Lectura de DMs y comentarios → ingesta a silo `negocios`
-- Drafts de respuesta (nivel A inicial; B cuando el patrón sea estable)
-- Coordinación con @defaia.cl: el agente propone, defaia revisa y publica
-- Posts programados solo nivel A indefinido (alto riesgo reputacional)
+- Instagram, Facebook, TikTok, X
+- Lectura de DMs + drafts de respuesta + coordinación con @defaia.cl
 
-### Fase 7 — Voice (entrante + saliente genérica) (2-3 sesiones, opcional)
+### Fase 7 — Sucesor OpenClaw: pacientes con contexto (2 sesiones)
+- `responder_whatsapp_paciente` con acceso al silo `pacientes`
+- Migración progresiva desde OpenClaw / n8n actual
+- Reporte diario AM/PM de pacientes
+- OpenClaw sigue funcionando en paralelo hasta validación de 3 meses
+
+### Fase 8 — Voice (entrante + saliente genérica) (2-3 sesiones, opcional)
 - Llamada entrante: tú llamas al agente, le hablas, te responde
 - Llamada saliente con voz genérica del "asistente del Dr. Wunderwald"
 - Twilio + Vapi + ElevenLabs
 
-### Fase 8 — Voice clonada (opcional, evaluar tras Fase 7)
-- Solo después de evaluar resultados de Fase 7
+### Fase 8.5 — Voice clonada (opcional, evaluar tras Fase 8)
+- Solo después de evaluar resultados de Fase 8
 - Decisión legal explícita
 - Casos de uso muy acotados
 
