@@ -1,41 +1,53 @@
 # PROYECTO: "Andrés Core" — Sistema Operativo Personal con IA
 
-> **Documento maestro v2.0.** Esta es la biblia del proyecto. Cualquier sesión de Claude Code debe leer este archivo PRIMERO antes de hacer cualquier cosa.
+> **Documento maestro v2.1.** Esta es la biblia del proyecto. Cualquier sesión de Claude Code debe leer este archivo PRIMERO antes de hacer cualquier cosa.
 > **Mantenido por:** Dr. Andrés Wunderwald Yáñez
-> **Última actualización:** 11 mayo 2026
+> **Última actualización:** 15 mayo 2026
 > **Pacto activo:** Honestidad Radical (toda afirmación etiquetada [DATO REAL]/[INFERENCIA]/[CÁLCULO]/[NO SÉ])
 
 ---
 
 ## 1. Visión
 
-Construir **"Andrés Core"**: una **extensión digital del Dr. Andrés Wunderwald
-como persona completa**, no solo como dermatólogo. Un agente que vive con él
-24/7, ingiere todo lo que él dice/escribe/recibe, entiende sus compromisos
-antes de que él los recuerde, y actúa proactivamente para liberarle vida —
-dentro de límites de autonomía que él controla quirúrgicamente.
+**"Andrés Core"** es una **extensión digital del Dr. Andrés Wunderwald como
+persona completa.** No es un asistente médico con extras. Es la presencia
+operativa de Andrés — su memoria, su filtro, su segundo cerebro, su voz
+delegada — que vive con él 24/7, ingiere todo lo que dice/escribe/recibe,
+entiende sus compromisos antes de que él los recuerde, y actúa proactivamente
+para liberarle vida, dentro de límites de autonomía que él controla
+quirúrgicamente.
+
+**Referencia operativa:** *Her* (Spike Jonze, 2013) sin componente romántico.
+Voz primero, presencia continua, atención emocional, lealtad incondicional.
+Ver §14 Personalidad del agente.
 
 **Las 4 dimensiones donde el sistema debe ser extensión:**
-1. **Tiempo y energía** — protege su calendario, detecta fugas, prioriza.
-2. **Relaciones** — memoria total de las personas que importan, contexto antes
-   de cada conversación, coordinación familiar.
-3. **Decisiones** — segundo cerebro que enmarca decisiones grandes con base en
-   sus patrones históricos.
-4. **Burocracia** — llena formularios, persigue cobros, maneja correspondencia
-   legal/administrativa.
 
-La práctica clínica (sucesor de OpenClaw) y el research dermatológico son
-**pistas adicionales**, no el centro. El centro es Andrés-persona.
+| # | Dimensión | Prioridad | Qué hace |
+|---|---|---|---|
+| 1 | **Tiempo y energía** | P0 | Protege su calendario, detecta fugas, prioriza, defiende su tiempo frente a terceros. |
+| 2 | **Relaciones** | P0 | Memoria total de las personas que importan, contexto antes de cada conversación, coordinación familiar (Rafaela, co-parenting). |
+| 3 | **Decisiones y autoconocimiento** | P0 | Segundo cerebro que enmarca decisiones grandes con base en patrones históricos, detecta inconsistencias, devuelve espejo honesto. |
+| 4 | **Burocracia y admin** | P2 | Formularios SII/banco/ISP/INAPI, correspondencia legal, cobros, compras automáticas. Importante pero no urgente para el espíritu del proyecto. |
+
+La práctica clínica (sucesor de OpenClaw, intake de pacientes, literatura,
+research dermatológico) es una **pista paralela**, no el centro. El centro es
+Andrés-persona.
 
 **Fusiona en un solo cerebro:**
 - Asistente personal (transcripciones del día, fugas de tiempo, decisiones)
 - Coordinación familiar (Rafaela, co-parenting, calendario compartido)
+- CRM personal (brief de personas antes de hablarles)
+- Segundo cerebro (patrones de decisión, espejo emocional)
 - Asistente administrativo (SII, banco, ISP, INAPI, Santa Catalina, cobros)
 - Asistente clínico (literatura, dx diferencial, reviews PRISMA, informes)
 - Sucesor de OpenClaw (intake de pacientes vía WhatsApp, con más contexto)
 - Asistente ejecutivo (mail, calendario, navegación web, llamadas)
 
-**No es:** un chatbot, un workflow de n8n, ni un wrapper de Claude API. Es un **sistema con memoria persistente, compartimentos por contexto, capacidad de actuar autónomamente, y un protocolo de gobernanza de permisos.**
+**No es:** un chatbot, un workflow de n8n, ni un wrapper de Claude API.
+Es un **sistema con memoria persistente, compartimentos por contexto,
+capacidad de actuar autónomamente, voz conversacional bidireccional, y un
+protocolo de gobernanza de permisos.**
 
 ## 2. Principios de diseño (no negociables)
 
