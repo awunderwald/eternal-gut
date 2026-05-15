@@ -1,4 +1,4 @@
-# PROYECTO: "Andrés Core" — Sistema Operativo Personal con IA
+# PROYECTO: "Dante" — Sistema Operativo Personal con IA
 
 > **Documento maestro v2.1.** Esta es la biblia del proyecto. Cualquier sesión de Claude Code debe leer este archivo PRIMERO antes de hacer cualquier cosa.
 > **Mantenido por:** Dr. Andrés Wunderwald Yáñez
@@ -9,8 +9,8 @@
 
 ## 1. Visión
 
-**"Andrés Core"** es una **extensión digital del Dr. Andrés Wunderwald como
-persona completa.** No es un asistente médico con extras. Es la presencia
+**"Dante"** es una **extensión digital del Dr. Andrés Wunderwald como
+persona completa.** La voz canónica del agente se llama **Dantev1**. No es un asistente médico con extras. Es la presencia
 operativa de Andrés — su memoria, su filtro, su segundo cerebro, su voz
 delegada — que vive con él 24/7, ingiere todo lo que dice/escribe/recibe,
 entiende sus compromisos antes de que él los recuerde, y actúa proactivamente
@@ -375,7 +375,7 @@ La voz deja de ser un add-on y pasa a ser la interfaz primaria.
 - Todo en VPS Hostinger
 - nginx + Let's Encrypt
 - Monitoring + backups automáticos
-- Migración completa de OpenClaw → Andrés Core
+- Migración completa de OpenClaw → Dante
 
 ## 10. Riesgos legales y éticos identificados
 
@@ -406,7 +406,7 @@ La voz deja de ser un add-on y pasa a ser la interfaz primaria.
 - **[NO SÉ]** Volumen real de mensajes WhatsApp / mes en OpenClaw actual
 - **[NO SÉ]** Volumen Anthropic API actual mensual
 - **[NO SÉ]** Especificaciones VPS Hostinger (RAM/CPU/OS) → Claude Code consultará por SSH en Fase 9
-- **[PENDIENTE]** Nombre definitivo del proyecto (provisorio: "Andrés Core")
+- ~~Nombre definitivo del proyecto~~ → **DECIDIDO 15 mayo 2026: "Dante"** (voz canónica: Dantev1). Ver ADR 0002.
 - **[PENDIENTE]** Nombre propio del agente (la "Samantha" de Andrés).
   Candidatas: Sol, Iris, Vera, Nova, Maia. Decisión del usuario.
 - **[PENDIENTE]** Voz español latino para el agente — investigar
@@ -495,7 +495,8 @@ masivo, armas). No se topa en operación normal del proyecto.
 
 ## 15. Glosario
 
-- **Andrés Core:** este proyecto (nombre provisorio)
+- **Dante:** este proyecto (nombre definitivo desde 15 mayo 2026; previamente "Andrés Core")
+- **Dantev1:** voz canónica del agente (versión 1; futuras voces serán Dantev2, Dantev3...)
 - **OpenClaw:** sistema actual (intake pacientes) — se migra progresivamente
 - **Plaud:** dispositivo wearable de grabación + transcripción con AI; fuente principal de ingesta
 - **Cachito:** keyword de alerta clínica urgente

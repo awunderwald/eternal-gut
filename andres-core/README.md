@@ -1,7 +1,12 @@
-# Andrés Core
+# Dante
 
 > Sistema operativo personal con IA para el Dr. Andrés Wunderwald.
+> Voz canónica del agente: **Dantev1**.
 > **La biblia del proyecto está en [`PROYECTO.md`](./PROYECTO.md). Léela primero.**
+>
+> *Nombre histórico: "Andrés Core" (hasta 15 mayo 2026, ver ADR 0002).
+> El directorio del proyecto sigue llamándose `andres-core/` por ahora —
+> rename pendiente a `dante/` cuando sea seguro hacerlo.*
 
 Pacto activo: **Honestidad Radical** — toda afirmación etiquetada
 `[DATO REAL]` / `[INFERENCIA]` / `[CÁLCULO]` / `[NO SÉ]`.

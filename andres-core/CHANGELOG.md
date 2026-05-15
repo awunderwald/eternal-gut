@@ -8,6 +8,16 @@ con SemVer.
 
 ## [Unreleased]
 
+### Naming — proyecto renombrado a "Dante" (15 mayo 2026)
+
+- **Nombre del proyecto:** `Andrés Core` → **`Dante`**.
+- **Voz canónica del agente:** **`Dantev1`** (versionable: futuras voces
+  serán Dantev2, Dantev3, ...).
+- ADR 0002 (`docs/decisiones/0002-naming-dante.md`) registra la decisión.
+- `PROYECTO.md` y `README.md` actualizados.
+- Directorio `andres-core/` **NO renombrado todavía** — esperar a Fase 0
+  cerrada para evitar romper el `git pull` y el `.env` del usuario.
+
 ### Fase 0 — Setup ambiente (12 mayo 2026)
 
 #### Added
