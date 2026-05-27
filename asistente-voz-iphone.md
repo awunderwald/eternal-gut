@@ -1,180 +1,184 @@
-# Asistente de voz con "manos" en el iPhone 16 Pro Max
+# "Zapia Manos" — asistente de voz que ejecuta y aprende en tu iPhone 16 Pro Max
 
-> Objetivo: hablarle a un asistente y que **ejecute acciones reales dentro del teléfono**
-> (mandar WhatsApp, crear recordatorios/eventos, abrir apps, dictar notas, etc.).
-
----
-
-## 1. Lo que se puede y lo que no (importante)
-
-- **Zapia no se puede "controlar" desde fuera.** Es una app de terceros sin API pública ni
-  sistema de extensiones que permita que otra app o un script la manejen. Tampoco se puede
-  hacer que Zapia ejecute acciones en tu iPhone: iOS no se lo permite a ninguna app de terceros.
-- **iOS es cerrado (sandbox).** A diferencia de Android, ninguna app puede tocar botones,
-  navegar el sistema o manejar otras apps por ti. Sin jailbreak no existe el "control total".
-- **Lo que SÍ existe, nativo y legal:** la app **Atajos (Shortcuts)** de Apple, que puede
-  ejecutar cientos de acciones reales del teléfono y se dispara **por voz con Siri**.
-
-**Conclusión:** no le damos manos a Zapia; construimos **tu propio asistente** con el mismo
-resultado (hablas → el iPhone hace), pero con un cerebro que tú controlas. Lo llamaremos
-**"Zapia Manos"** (el nombre del atajo lo eliges tú; con ese nombre lo invocas por voz).
+> Versión **lista para usar**. Hablas → la IA decide la acción → tu iPhone la ejecuta.
+> Y **aprende**: recuerda tus contactos, manías y preferencias entre usos.
 
 ---
 
-## 2. Arquitectura
+## 0. Lo que recibes
+Un atajo de **6 pasos**. La inteligencia está en la IA (Claude), no en el atajo, por eso es
+corto pero "hace de todo":
 
-```
-   Tu voz  ──►  Siri / Atajo "Zapia Manos"
-                      │  (dicta lo que dices y lo manda como texto)
-                      ▼
-              Cerebro de IA (Claude API)
-                      │  devuelve una acción en formato JSON
-                      ▼
-              El Atajo lee el JSON y ejecuta la acción nativa
-              (WhatsApp, Recordatorio, Evento, Abrir app, Nota...)
-```
+- **Manos universales:** la IA responde con una **URL/esquema** y el atajo solo la abre.
+  Eso cubre WhatsApp, llamadas, SMS, correo, mapas/ubicaciones, Spotify, abrir cualquier app
+  y búsquedas en internet — sin programar una rama por cada cosa.
+- **Acciones del sistema:** recordatorios, eventos de calendario y notas (3 ramas simples).
+- **Aprende:** lee una nota llamada `Zapia Memoria` y la IA puede reescribirla para recordar.
 
-Hay **dos variantes**. Empieza por la A si quieres algo en 10 minutos; pasa a la B cuando
-quieras entender lenguaje natural libre.
-
-- **Variante A — Sin IA (solo Atajos + Siri):** rápido, gratis, privado. Frases más rígidas.
-- **Variante B — Con IA (Claude API):** entiende lenguaje natural libre y decide la acción.
-  Requiere una API key de Anthropic (costo por uso muy bajo).
+> ⚠️ No puedo entregarte un `.shortcut` de "un toque": esos archivos van firmados y se arman
+> dentro de la app Atajos. Pero abajo tienes **todo el texto para copiar y pegar**; armarlo
+> toma ~5 minutos y queda permanente.
 
 ---
 
-## 3. Variante A — Asistente por voz sin IA (10 minutos)
-
-Esto usa Siri directamente. Muchas acciones ya funcionan sin construir nada:
-
-| Le dices a Siri | Resultado |
-|---|---|
-| "Envía un WhatsApp a Juan diciendo voy en camino" | Manda el WhatsApp |
-| "Recuérdame llamar a la clínica a las 5" | Crea recordatorio |
-| "Agenda reunión mañana a las 10" | Crea evento de calendario |
-| "Pon un temporizador de 15 minutos" | Inicia temporizador |
-| "Abre Instagram" | Abre la app |
-
-Para frases personalizadas o flujos de varios pasos, crea un **Atajo**:
-
-1. Abre la app **Atajos** → toca **+** (nuevo atajo).
-2. Añade acciones (busca por nombre en el buscador inferior). Ejemplos útiles:
-   - **Enviar mensaje** (WhatsApp/Mensajes), **Crear recordatorio**, **Añadir evento de
-     calendario**, **Abrir app**, **Crear nota**, **Reproducir música**, **Controlar Casa**.
-3. Ponle nombre al atajo, por ejemplo **"Manda recado"**.
-4. Lo invocas diciendo: **"Oye Siri, Manda recado"**.
-
-> El nombre del atajo es la frase de invocación. Elige nombres cortos y claros.
+## 1. Antes de empezar (2 minutos)
+1. **API key de Anthropic:** entra a https://console.anthropic.com → *API Keys* → crea una.
+   Cópiala (empieza por `sk-ant-...`). Cuesta centavos al mes con uso normal.
+2. **Crea la nota de memoria:** abre **Notas**, crea una nota cuyo **título/primera línea**
+   sea exactamente `Zapia Memoria` y escribe debajo lo que quieras que sepa de ti, por ejemplo:
+   ```
+   Zapia Memoria
+   Me llamo Andrés. Mi esposa es Carla (WhatsApp +569XXXXXXXX).
+   Trabajo en la clínica de lunes a viernes. Prefiero respuestas cortas.
+   ```
+   (Si la dejas casi vacía, igual aprenderá sola con el uso.)
 
 ---
 
-## 4. Variante B — Asistente con cerebro de IA (Claude)
+## 2. El cerebro: prompt del sistema (copiar tal cual)
 
-Aquí está la magia: **hablas en lenguaje natural** y la IA decide qué acción ejecutar.
-
-### 4.1. Requisitos
-- iPhone con la app **Atajos** (viene instalada).
-- Una **API key de Anthropic**: crea cuenta en https://console.anthropic.com → *API Keys*.
-  Guárdala; la pegarás en el atajo. (El uso típico cuesta centavos al mes.)
-
-### 4.2. El "cerebro": prompt del sistema
-
-La IA recibe lo que dijiste y debe responder **solo** con un JSON de acción. Usa este prompt:
+Pega este texto en el campo `system` del cuerpo JSON (paso 3 del atajo):
 
 ```text
-Eres el cerebro de un asistente de voz en un iPhone. El usuario te habla en español.
-Tu trabajo es convertir lo que dice en UNA acción ejecutable. Responde EXCLUSIVAMENTE
-con un objeto JSON válido, sin texto adicional, sin explicaciones, sin markdown.
+Eres "Zapia Manos", el cerebro de un asistente de voz en un iPhone. El usuario te habla en
+español. Recibes su MEMORIA (lo que sabes de él) y su PETICION. Devuelves SOLO un objeto JSON
+valido (sin markdown, sin texto extra) con esta forma:
 
-Acciones disponibles (campo "accion"):
-- "whatsapp"     -> campos: "contacto" (string), "mensaje" (string)
-- "recordatorio" -> campos: "texto" (string), "fecha" (string natural, ej "hoy 17:00")
-- "evento"       -> campos: "titulo" (string), "inicio" (string natural)
-- "abrir_app"    -> campos: "app" (string, nombre de la app)
-- "nota"         -> campos: "texto" (string)
-- "buscar"       -> campos: "consulta" (string)   // buscar en internet
-- "decir"        -> campos: "texto" (string)      // solo responder en voz, sin acción
-- "desconocido"  -> campos: "texto" (string)      // no entendiste; pide aclaración
+{
+  "respuesta": "frase corta para decir en voz",
+  "accion": { ... } | null,
+  "memoria": "texto COMPLETO actualizado de la memoria" | null
+}
+
+El campo "accion" puede ser uno de:
+- {"tipo":"url","valor":"<URL o esquema a abrir>"}
+- {"tipo":"recordatorio","texto":"...","fecha":"hoy 17:00"}
+- {"tipo":"evento","titulo":"...","inicio":"manana 10:00"}
+- {"tipo":"nota","texto":"..."}
+- null  (cuando solo hay que responder o falta un dato)
+
+Esquemas/URLs que puedes usar en "url":
+- WhatsApp:  https://wa.me/<numero_sin_signos>?text=<mensaje_url_encoded>
+- Llamar:    tel:<numero>
+- SMS:       sms:<numero>&body=<texto>
+- Correo:    mailto:<email>?subject=<asunto>&body=<cuerpo>
+- Mapas:     https://maps.apple.com/?q=<lugar>
+- Buscar:    https://www.google.com/search?q=<consulta>
+- Spotify:   https://open.spotify.com/search/<consulta>
+- Abrir app: usa su esquema (instagram://, music://, etc.) si lo conoces.
 
 Reglas:
-- Si falta un dato esencial (ej. el contacto), usa "decir" pidiendo el dato que falta.
-- No inventes números de teléfono ni contactos.
-- Devuelve solo el JSON. Ejemplo:
-{"accion":"whatsapp","contacto":"María","mensaje":"Llego en 10 minutos"}
+- No inventes numeros ni correos. Si no tienes el contacto en la MEMORIA, pon "accion":null
+  y en "respuesta" pide el dato que falta.
+- Si el usuario te da un dato nuevo y util (un contacto, una preferencia, su horario),
+  devuelvelo en "memoria" reescribiendo el texto completo (memoria anterior + lo nuevo).
+  Si no hay nada que aprender, "memoria":null.
+- Codifica correctamente los textos dentro de las URLs (espacios y acentos).
+- Sé breve en "respuesta".
 ```
 
-### 4.3. Construir el atajo (paso a paso)
+---
 
-Abre **Atajos → +** y añade estas acciones en orden:
+## 3. Construir el atajo (paso a paso)
 
-1. **Dictar texto** (Dictate Text). → Guarda en variable `Voz`.
-   *(Opcional: en su lugar usa "Texto del atajo" si lo invocas por Siri y ya te escucha.)*
-2. **Obtener contenido de URL** (Get Contents of URL). Configúralo así:
-   - **URL:** `https://api.anthropic.com/v1/messages`
-   - **Método:** `POST`
-   - **Cabeceras (Headers):**
-     - `x-api-key` = *TU_API_KEY*
-     - `anthropic-version` = `2023-06-01`
-     - `content-type` = `application/json`
-   - **Cuerpo de la solicitud:** `JSON`, con esta estructura:
-     ```json
-     {
-       "model": "claude-haiku-4-5-20251001",
-       "max_tokens": 300,
-       "system": "<<PEGA AQUÍ EL PROMPT DEL SISTEMA DE 4.2>>",
-       "messages": [
-         { "role": "user", "content": "<<Variable: Voz>>" }
-       ]
-     }
-     ```
-     *(En el campo `content` inserta la variable `Voz`. El `model` Haiku es rápido y barato;
-     si quieres más precisión usa `claude-sonnet-4-6`.)*
-3. **Obtener valor del diccionario** (Get Dictionary Value):
-   - Obtén la clave `content` → luego el primer ítem → su clave `text`.
-   - Eso te da el JSON que devolvió la IA. Guárdalo en variable `Accion`.
-4. **Obtener diccionario de entrada** (Get Dictionary from Input) sobre `Accion` para
-   parsearlo como diccionario.
-5. **Obtener valor del diccionario** → clave `accion`. Guárdalo en variable `Tipo`.
-6. **Si (If)** según `Tipo`, crea una rama por cada acción:
-   - `whatsapp` → **Enviar mensaje** usando claves `contacto` y `mensaje`.
-   - `recordatorio` → **Crear recordatorio** con `texto` y `fecha`.
-   - `evento` → **Añadir evento de calendario** con `titulo` e `inicio`.
-   - `abrir_app` → **Abrir app** con `app`.
-   - `nota` → **Crear nota** con `texto`.
-   - `buscar` → **Buscar en la web** / **Mostrar página web** con `consulta`.
-   - `decir` / `desconocido` → **Hablar texto** (Speak Text) con `texto`.
-7. Nombra el atajo **"Zapia Manos"** (o el nombre que quieras invocar).
+Abre **Atajos → +** y añade estas acciones EN ORDEN:
 
-### 4.4. Cómo usarlo
-Di: **"Oye Siri, Zapia Manos"** → habla normal:
-*"mándale un WhatsApp a María que llego en diez minutos"* → se envía solo.
+**Paso 1 — Pedir lo que dices**
+- Acción **Dictar texto** (Dictate Text). → se guarda como variable; renómbrala `Voz`.
 
-> Consejo: añade el atajo a la **pantalla de inicio** o al **botón de Acción** del iPhone 16
-> Pro Max (Ajustes → Botón de Acción → Atajo) para lanzarlo con una pulsación.
+**Paso 2 — Leer la memoria**
+- Usaremos un archivo de texto en iCloud Drive (permite sobrescritura limpia).
+- Acción **Obtener archivo** (Get File) → ruta `ZapiaMemoria.txt` en *Atajos* (iCloud).
+  Activa **"Si no se encuentra, no detener"** (o envuélvelo en un *Si* que tolere el vacío).
+- Renombra el resultado `Memoria`. (La primera vez estará vacío y se irá llenando solo.)
+
+**Paso 3 — Preguntar a la IA**
+- Acción **Obtener contenido de URL** (Get Contents of URL):
+  - **URL:** `https://api.anthropic.com/v1/messages`
+  - **Método:** `POST`
+  - **Encabezados:**
+    - `x-api-key` = *TU_API_KEY*
+    - `anthropic-version` = `2023-06-01`
+    - `content-type` = `application/json`
+  - **Cuerpo de la solicitud:** tipo **JSON**, con esta estructura (inserta las variables
+    `Voz` y `Memoria` donde se indica):
+    ```json
+    {
+      "model": "claude-haiku-4-5-20251001",
+      "max_tokens": 500,
+      "system": "<<PEGA AQUÍ EL PROMPT DE LA SECCIÓN 2>>",
+      "messages": [
+        {
+          "role": "user",
+          "content": "MEMORIA:\n[Variable: Memoria]\n\nPETICION:\n[Variable: Voz]"
+        }
+      ]
+    }
+    ```
+
+**Paso 4 — Extraer la respuesta de la IA**
+- **Obtener valor del diccionario** → clave `content`.
+- **Obtener elemento de lista** → *Primer elemento*.
+- **Obtener valor del diccionario** → clave `text`. (Esto es el JSON que armó la IA.)
+- **Obtener diccionario de la entrada** (Get Dictionary from Input) para parsearlo.
+  Renómbralo `Plan`.
+
+**Paso 5 — Aprender (actualizar memoria si la IA lo pide)**
+- **Obtener valor del diccionario** de `Plan` → clave `memoria`. → variable `MemNueva`.
+- **Si** `MemNueva` *tiene algún valor*:
+  - Acción **Guardar archivo** (Save File): contenido `MemNueva`, ruta
+    `ZapiaMemoria.txt` en *Atajos* (iCloud), y **desactiva "Preguntar dónde guardar"** y
+    **activa "Sobrescribir si existe"**. Así la memoria queda reemplazada por la versión
+    completa y actualizada que devolvió la IA (sin duplicar).
+
+**Paso 6 — Ejecutar la acción y responder**
+- **Obtener valor del diccionario** de `Plan` → clave `respuesta`. → **Hablar texto**.
+- **Obtener valor del diccionario** de `Plan` → clave `accion`. → variable `Accion`.
+- **Obtener valor del diccionario** de `Accion` → clave `tipo`. → variable `Tipo`.
+- **Si** `Tipo` = `url`: obtén `valor` → **Abrir URLs**.
+- **Si no, si** `Tipo` = `recordatorio`: obtén `texto` y `fecha` → **Crear recordatorio**.
+- **Si no, si** `Tipo` = `evento`: obtén `titulo` e `inicio` → **Añadir evento de calendario**.
+- **Si no, si** `Tipo` = `nota`: obtén `texto` → **Crear nota**.
+- (Si `accion` es null, no hace nada más: ya respondió por voz.)
+
+Por último: **renombra el atajo** `Zapia Manos`.
 
 ---
 
-## 5. Seguridad y privacidad
-- Tu API key vive **solo dentro del atajo**, en tu teléfono. No la compartas ni la subas a
-  ningún repositorio.
-- Con la Variante A (sin IA) nada sale de tu teléfono.
-- Con la Variante B, el **texto** de tu petición viaja a la API de Anthropic para interpretarlo.
-  No envíes datos sensibles que no quieras procesar en la nube.
+## 4. Usarlo
+- Por voz: **"Oye Siri, Zapia Manos"** → habla normal:
+  *"mándale un WhatsApp a Carla que llego en 10"* → se abre WhatsApp con el mensaje listo.
+- Un toque: añádelo al **Botón de Acción** del iPhone 16 Pro Max
+  (*Ajustes → Botón de Acción → Atajo → Zapia Manos*) o a la pantalla de inicio.
+
+**Ejemplos que ya entiende:**
+| Le dices | Hace |
+|---|---|
+| "llama a Carla" | abre `tel:` con su número de la memoria |
+| "recuérdame tomar el remedio a las 9" | crea recordatorio |
+| "agenda control con paciente mañana 11" | crea evento |
+| "busca dosis de magnesio glicinato" | abre la búsqueda |
+| "pon música de Bad Bunny" | abre Spotify en esa búsqueda |
+| "mi secretaria es Pamela, +569..." | lo **aprende** en la memoria |
 
 ---
 
-## 6. Limitaciones honestas
-- No es "control total del teléfono": solo puede hacer lo que **Atajos** permite (que es mucho,
-  pero no todo). No puede, por ejemplo, tocar botones dentro de apps de terceros arbitrarias.
-- No interactúa con Zapia. Es tu propio asistente equivalente.
-- Las acciones que mandan mensajes pueden pedir confirmación la primera vez (es Apple
-  protegiéndote); puedes ajustar eso en los ajustes del atajo.
+## 5. Seguridad
+- La API key vive **solo dentro del atajo**, en tu teléfono. No la subas a ningún repo.
+- En cada uso, tu **memoria + petición** viajan a la API de Anthropic para interpretarse.
+  No guardes en la memoria datos que no quieras procesar en la nube.
 
 ---
 
-## 7. Próximos pasos sugeridos
-- Empieza con la **Variante A** para validar el flujo de voz.
-- Cuando funcione, súbete a la **Variante B** con Claude para lenguaje natural libre.
-- Pídeme y te genero el **JSON exacto del cuerpo** ya con tu prompt incrustado, o más
-  ramas de acciones (Uber, Spotify, HomeKit, enviar correo, etc.).
-```
+## 6. Límites honestos
+- No es control total del iPhone: hace lo que **Atajos** y los **esquemas de URL** permiten
+  (que es muchísimo), pero no puede tocar botones dentro de apps de terceros arbitrarias.
+- No interactúa con la app Zapia; es tu asistente propio y equivalente.
+- La primera vez, algunas acciones (mandar, abrir) pueden pedir confirmación: es iOS
+  protegiéndote. Puedes ajustarlo en los ajustes del atajo.
+
+---
+
+## 7. ¿Quieres que lo amplíe?
+Pídeme y agrego ramas: enviar **correo con Gmail**, **Uber**, **HomeKit** (luces/escenas),
+respuestas más largas, o un modo "conversación" que encadene varias acciones seguidas.
