@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#fdf6ec" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Animalitos · Conoce el reino animal</title>
+  <meta name="description" content="App suave y gentil para que los niños pequeños conozcan a los animales: foto, video, sonido y un dato para que los papás lean." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon.svg" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ============ PANTALLA: INICIO (categorías) ============ -->
+    <section id="screen-home" class="screen active">
+      <div class="topbar">
+        <div class="brand">
+          <span class="mascot">🦁</span>
+          <span class="titles">
+            <h1 data-i18n="appName">Animalitos</h1>
+            <span class="tagline" data-i18n="tagline">Conoce el reino animal</span>
+          </span>
+        </div>
+        <button id="btn-parents" class="round-btn" aria-label="Para adultos">⚙️</button>
+      </div>
+      <h2 class="hint" data-i18n="chooseCategory">Elige un grupo</h2>
+      <div id="home-grid" class="grid"></div>
+    </section>
+
+    <!-- ============ PANTALLA: CATEGORÍA (animales) ============ -->
+    <section id="screen-category" class="screen">
+      <div class="topbar">
+        <button id="btn-back-home" class="round-btn" aria-label="Volver">⬅️</button>
+        <h2 id="category-title"></h2>
+      </div>
+      <p id="category-hint" class="hint" data-i18n="tapToMeet">Toca al animal para conocerlo</p>
+      <div id="animal-grid" class="animal-grid"></div>
+    </section>
+
+    <!-- ============ PANTALLA: DETALLE DEL ANIMAL ============ -->
+    <section id="screen-animal" class="screen">
+      <div class="topbar">
+        <button id="btn-back-cat" class="round-btn" aria-label="Volver">⬅️</button>
+        <h2 id="animal-topname" style="flex:1;"></h2>
+      </div>
+
+      <div class="detail-hero">
+        <video id="player" playsinline preload="metadata"></video>
+        <button id="big-play" class="big-play" aria-label="Reproducir"><span>▶️</span></button>
+      </div>
+
+      <h2 id="animal-name" class="animal-title"></h2>
+
+      <div class="player-controls">
+        <button id="btn-playpause" class="pill-btn primary">▶️ <span data-i18n="play">Reproducir</span></button>
+        <button id="btn-replay" class="pill-btn">🔁 <span data-i18n="replay">Ver de nuevo</span></button>
+        <button id="btn-sound" class="pill-btn sound">🔊 <span data-i18n="sound">Sonido</span></button>
+      </div>
+
+      <div id="video-dots" class="video-dots"></div>
+      <p id="player-note" class="note"></p>
+
+      <div class="fact-card">
+        <div class="fact-head">
+          <span class="label"><span data-i18n="knowledgeIn">Leer en</span></span>
+          <button id="flag-toggle" class="flag-toggle"></button>
+        </div>
+        <p id="fact-text" class="fact-text"></p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============ MODAL: zona de adultos (gate + ajustes) ============ -->
+  <div id="modal" class="modal-backdrop">
+    <div class="modal">
+      <!-- Vista 1: control parental -->
+      <div id="gate-view">
+        <h3 data-i18n="parentGateTitle">Zona de adultos</h3>
+        <p class="modal-note" data-i18n="parentGatePrompt">Para continuar, resuelve:</p>
+        <div id="gate-question" class="gate-question"></div>
+        <input id="gate-input" class="gate-input" type="number" inputmode="numeric" />
+        <div id="gate-error" class="gate-error"></div>
+        <div class="modal-actions">
+          <button id="gate-cancel" class="pill-btn" data-i18n="close">Cerrar</button>
+          <button id="gate-ok" class="pill-btn primary">OK</button>
+        </div>
+      </div>
+
+      <!-- Vista 2: ajustes -->
+      <div id="settings-view" style="display:none;">
+        <h3 data-i18n="parents">Para mamá y papá</h3>
+
+        <div class="section-label" data-i18n="appLanguage">Idioma de la app</div>
+        <div class="lang-row">
+          <button class="choice" data-lang="es">🇪🇸 Español</button>
+          <button class="choice" data-lang="en">🇺🇸 English</button>
+        </div>
+
+        <div class="section-label" data-i18n="plan">Plan de suscripción (prototipo)</div>
+        <div id="plan-list" class="plan-list"></div>
+        <p class="modal-note" data-i18n="planNote"></p>
+
+        <div class="modal-actions">
+          <button id="settings-close" class="pill-btn primary" data-i18n="close">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "Animalitos · Conoce el reino animal",
+  "short_name": "Animalitos",
+  "description": "App suave y gentil para que los niños pequeños conozcan a los animales.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fdf6ec",
+  "theme_color": "#fdf6ec",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

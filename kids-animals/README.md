@@ -1,0 +1,93 @@
+# 🦁 Animalitos — prototipo
+
+App **suave y gentil** para que niños menores de 5 años conozcan el reino animal.
+Cada animal tiene una **foto grande y realista**, **videos** (con pausa y repetición),
+su **sonido característico**, su **nombre** y un **dato** para que mamá y papá lo lean.
+
+Es una **PWA** (aplicación web instalable): funciona en cualquier celular desde el
+navegador, se puede "agregar a la pantalla de inicio" y no cuesta nada alojarla
+(por ejemplo, GitHub Pages). Más adelante se puede empaquetar como app nativa
+(Android/iOS) con Capacitor sin reescribir nada.
+
+## ▶️ Cómo probarla
+
+Necesita servirse por HTTP (no abriendo el archivo directo) por el service worker:
+
+```bash
+cd kids-animals
+python3 -m http.server 8080
+# Abre http://localhost:8080 en el celular o el navegador
+```
+
+> En un celular real: abre la URL y usa "Agregar a pantalla de inicio" para
+> verla a pantalla completa, como una app.
+
+## 🎛️ Qué incluye el prototipo
+
+- **Pantallas:** Inicio (grupos) → Animales → Detalle del animal.
+- **Grupo "Felinos"** completo: 🦁 León, 🐯 Tigre, 🐆 Guepardo, 🐱 Gato.
+  Cada uno con foto, 2–3 videos y dato bilingüe. Tigre y Gato traen además un
+  clip de sonido característico.
+- **Reproductor gentil:** botón grande de play, **pausa**, **"ver de nuevo"** y
+  selector de videos (1, 2, 3…). Sin reproducción automática ni sonidos bruscos.
+- **Dos idiomas independientes:**
+  - *Idioma de la app* (todo el texto de botones/títulos). Se detecta solo según
+    el país/idioma del teléfono; por defecto **español**.
+  - *Idioma del dato* (el conocimiento): se cambia con una **banderita** 🇪🇸/🇺🇸
+    en la tarjeta del animal, sin cambiar el idioma de la app.
+- **Modelo de suscripción (simulado):**
+  - 👑 **Modo Dios** — todo desbloqueado (así arranca el prototipo).
+  - 🆓 **Gratis** — 1 grupo, 2 animales, 1 video, 3 repeticiones/día, sin cambio de idioma del dato.
+  - 📅 **Mensual**, 🗓️ **Anual**, ♾️ **De por vida** — cada uno con más contenido.
+
+  Se cambia de plan en la **zona de adultos** (engranaje ⚙️ → resolver una suma
+  sencilla = control parental). Al cambiar de plan se ve **en vivo** cómo se
+  bloquean/desbloquean animales, videos e idiomas.
+- **Diseño para cerebros pequeños:** colores pastel cálidos, formas redondeadas,
+  tipografía grande, transiciones lentas, botones grandes y sin parpadeos.
+
+## 🧩 Cómo agregar o cambiar animales
+
+Todo el contenido vive en **`data.js`**. Para sumar un animal, copia un bloque
+existente y cambia:
+
+- `name` (es/en), `image` (URL de la foto),
+- `facts` (es/en) — el texto que leen los papás,
+- `videos[]` — cada video con `src` (versión liviana 480p) y `fallback` (original),
+- `sound` (opcional) — clip del sonido característico.
+
+Para agregar un **grupo nuevo** (granja, océano, aves…), agrega una categoría en
+`ANIMAL_DATA.categories`. Ya están de ejemplo "Animales de granja" y "Océano"
+marcados como *premium / próximamente* para mostrar el modelo de negocio.
+
+## 💸 Costo inicial = $0 (medios libres)
+
+Todas las imágenes, videos y sonidos vienen de **Wikimedia Commons** con licencias
+libres (Creative Commons / dominio público). Los videos usan la versión
+**transcodificada a 480p** de Commons para que carguen rápido en datos móviles.
+
+### Créditos de medios (Wikimedia Commons)
+
+| Animal | Archivo |
+|---|---|
+| Foto León | `Lion waiting in Namibia.jpg` |
+| Video León | `Lion (Panthera leo).webm`, `Lions (Panthera leo).webm` |
+| Foto Tigre | `Siberian Tiger sf.jpg` |
+| Video Tigre | `Walking Tiger in Zoo.webm`, `Sumatran tiger ... vocalising.webm`, `Malayan tiger ... in a zoo.webm` |
+| Sonido Tigre | `439280 schots angry-tiger.wav` |
+| Foto Guepardo | `Cheetah portrait Whipsnade Zoo.jpg` |
+| Video Guepardo | `Rozi the cheetah running at the Cincinnati Zoo.webm`, `Cheetah, Madikwe.webm` |
+| Foto Gato | `Cat03.jpg` |
+| Video Gato | `Cat lapping water off ground in slow motion.gk.webm`, `Cat kneading and sucking blanket.webm` |
+| Sonido Gato | `Meow.ogg` |
+
+> Para producción conviene **descargar y alojar** los archivos (o usar un CDN
+> propio) y mostrar la atribución de cada autor según su licencia, en lugar de
+> enlazar directo a Commons.
+
+## 🚀 Siguientes pasos sugeridos
+
+1. Reemplazar/ampliar medios y grupos (aves, granja, océano, dinosaurios…).
+2. Suscripciones reales con Stripe o las tiendas (Google Play / App Store).
+3. Empaquetar como app nativa con **Capacitor** para publicar en las tiendas.
+4. Modo offline de medios (descargar un grupo para usar sin internet).

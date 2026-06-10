@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="112" fill="#fdf6ec"/>
+  <g fill="#7fb069">
+    <!-- almohadilla central de la patita -->
+    <path d="M256 300c-44 0-80 30-80 66 0 26 22 42 52 42 14 0 20-6 28-6s14 6 28 6c30 0 52-16 52-42 0-36-36-66-80-66z"/>
+    <!-- deditos -->
+    <ellipse cx="168" cy="246" rx="30" ry="38"/>
+    <ellipse cx="222" cy="206" rx="28" ry="40"/>
+    <ellipse cx="290" cy="206" rx="28" ry="40"/>
+    <ellipse cx="344" cy="246" rx="30" ry="38"/>
+  </g>
+</svg>
