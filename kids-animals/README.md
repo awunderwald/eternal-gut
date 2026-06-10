@@ -25,9 +25,15 @@ python3 -m http.server 8080
 ## 🎛️ Qué incluye el prototipo
 
 - **Pantallas:** Inicio (grupos) → Animales → Detalle del animal.
-- **Grupo "Felinos"** completo: 🦁 León, 🐯 Tigre, 🐆 Guepardo, 🐱 Gato.
-  Cada uno con foto, 2–3 videos y dato bilingüe. Tigre y Gato traen además un
-  clip de sonido característico.
+- **8 grupos:**
+  - 🐯 **Felinos** (grupo estrella, 4 animales): 🦁 León, 🐯 Tigre, 🐆 Guepardo, 🐱 Gato.
+  - 🐮 **Granja**: Vaca · 🐬 **Océano**: Delfín · 🐘 **Sabana**: Elefante ·
+    🦜 **Aves**: Guacamayo · 🐻 **Bosque**: Oso · 🐒 **Selva**: Mono (un animal por grupo).
+  - 🦖 **Dinosaurios** (grupo **premium**): el T-Rex se ve siempre, pero sin
+    suscripción aparece con una cinta amable **"Bloqueado"** (letras blancas
+    sobre rojo). Con Modo Dios / Anual / De por vida se desbloquea y se abre.
+  Cada animal trae foto realista, video(s) y dato bilingüe; varios incluyen
+  además su **sonido característico** (tigre, gato, vaca, elefante, oso, mono).
 - **Reproductor gentil:** botón grande de play, **pausa**, **"ver de nuevo"** y
   selector de videos (1, 2, 3…). Sin reproducción automática ni sonidos bruscos.
 - **Dos idiomas independientes:**
@@ -36,13 +42,15 @@ python3 -m http.server 8080
   - *Idioma del dato* (el conocimiento): se cambia con una **banderita** 🇪🇸/🇺🇸
     en la tarjeta del animal, sin cambiar el idioma de la app.
 - **Modelo de suscripción (simulado):**
-  - 👑 **Modo Dios** — todo desbloqueado (así arranca el prototipo).
-  - 🆓 **Gratis** — 1 grupo, 2 animales, 1 video, 3 repeticiones/día, sin cambio de idioma del dato.
-  - 📅 **Mensual**, 🗓️ **Anual**, ♾️ **De por vida** — cada uno con más contenido.
+  - 👑 **Modo Dios** — todo desbloqueado, incluido el grupo premium (así arranca el prototipo).
+  - 🆓 **Gratis** — 2 grupos, 2 animales, 1 video, 3 repeticiones/día, sin premium ni cambio de idioma del dato.
+  - 📅 **Mensual** — todos los grupos no-premium, 2 videos por animal.
+  - 🗓️ **Anual** y ♾️ **De por vida** — todo + grupos **premium** (dinosaurios).
 
   Se cambia de plan en la **zona de adultos** (engranaje ⚙️ → resolver una suma
   sencilla = control parental). Al cambiar de plan se ve **en vivo** cómo se
-  bloquean/desbloquean animales, videos e idiomas.
+  bloquean/desbloquean grupos, animales, videos e idiomas — por ejemplo, el
+  grupo Dinosaurios muestra cómo se vería **con** y **sin** suscripción.
 - **Diseño para cerebros pequeños:** colores pastel cálidos, formas redondeadas,
   tipografía grande, transiciones lentas, botones grandes y sin parpadeos.
 
@@ -80,6 +88,13 @@ libres (Creative Commons / dominio público). Los videos usan la versión
 | Foto Gato | `Cat03.jpg` |
 | Video Gato | `Cat lapping water off ground in slow motion.gk.webm`, `Cat kneading and sucking blanket.webm` |
 | Sonido Gato | `Meow.ogg` |
+| Vaca | `Cow female black white.jpg`, `Cow crosses cattle grid.webm`, `Single Cow Moo.ogg` |
+| Delfín | `010 Atlantic bottlenose dolphin jumping ... Giles Laurent.jpg`, `053 Pod of Spinner dolphins ... Giles Laurent.webm` |
+| Elefante | `African elephant front view portrait.jpg`, `Bathing the elephant.webm`, `Elephant voice - trumpeting.ogg` |
+| Guacamayo | `Scarlet macaw (Ara macao cyanopterus) Copan.jpg`, `Ara macao 01.ogv` |
+| Oso | `Portrait of a Brown Bear - panoramio.jpg`, `Brown Bear (Ursus arctos).webm`, `Bear growl.ogg` |
+| Mono | `Rhesus macaque Macaca mulatta DSC 0184.jpg`, `Baby monkey drinking water.webm`, `Dusky-leaf-monkey-call-kaeng-krachan.ogg` |
+| T-Rex (premium) | `Tyrannosaurus Rex (Zhengzhou).jpg`, `Trex animatronic.webm` |
 
 > Para producción conviene **descargar y alojar** los archivos (o usar un CDN
 > propio) y mostrar la atribución de cada autor según su licencia, en lugar de

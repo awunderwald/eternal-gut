@@ -165,9 +165,39 @@ body {
   font-weight: 800;
   color: var(--ink);
 }
+/* Bloqueado: el animalito SIGUE viéndose en colores (gentil), solo agregamos
+   una cinta amable abajo y dejamos espacio para ella. */
 .category-card.locked {
-  filter: grayscale(0.5);
-  opacity: 0.78;
+  padding-bottom: 46px;
+}
+.lock-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #ef6b6b 0%, #e23b3b 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 9px 8px;
+  text-align: center;
+  border-bottom-left-radius: calc(var(--radius) - 4px);
+  border-bottom-right-radius: calc(var(--radius) - 4px);
+}
+.premium-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--sun);
+  color: var(--ink);
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 14px;
+}
+.category-card.premium {
+  border-color: var(--sun);
 }
 .badge-soft {
   position: absolute;

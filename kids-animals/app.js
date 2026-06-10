@@ -101,19 +101,17 @@
     ANIMAL_DATA.categories.forEach((cat, i) => {
       const locked = categoryLocked(cat, i);
       const card = document.createElement("button");
-      card.className = "card category-card" + (locked || cat.comingSoon ? " locked" : "");
+      card.className =
+        "card category-card" + (locked ? " locked" : "") + (cat.premium ? " premium" : "");
       card.innerHTML = `
+        ${cat.premium ? `<span class="premium-tag">👑 ${t("premiumTag")}</span>` : ""}
         <span class="emoji">${cat.icon}</span>
         <span class="label">${cat.name[state.uiLang]}</span>
-        ${cat.comingSoon ? `<span class="badge-soft">${t("comingSoon")}</span>` : ""}
-        ${!cat.comingSoon && locked ? `<span class="badge-soft">🔒</span>` : ""}
+        ${locked ? `<span class="lock-band">🔒 ${t("lockedShort")}</span>` : ""}
       `;
       card.addEventListener("click", () => {
-        if (cat.comingSoon) {
-          flashParents();
-          return;
-        }
         if (locked) {
+          // Aviso amable y un guiño al engranaje de adultos.
           flashParents();
           return;
         }
