@@ -199,6 +199,37 @@ body {
 .category-card.premium {
   border-color: var(--sun);
 }
+
+/* Guiño tierno 😉 al tocar un grupo bloqueado. Suave y breve. */
+.wink {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.3);
+  font-size: 3.4rem;
+  pointer-events: none;
+  z-index: 5;
+  filter: drop-shadow(0 6px 12px rgba(120, 100, 70, 0.3));
+  animation: winkPop 1.3s var(--ease) forwards;
+}
+@keyframes winkPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3) rotate(-8deg);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(-50%, -50%) scale(1.15) rotate(4deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -55%) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+}
 .badge-soft {
   position: absolute;
   top: 10px;

@@ -111,7 +111,8 @@
       `;
       card.addEventListener("click", () => {
         if (locked) {
-          // Aviso amable y un guiño al engranaje de adultos.
+          // Reacción tierna: el animalito te guiña un ojo 😉 y un guiño al engranaje.
+          winkAt(card);
           flashParents();
           return;
         }
@@ -119,6 +120,15 @@
       });
       grid.appendChild(card);
     });
+  }
+
+  // Guiño tierno sobre una tarjeta bloqueada 😉 (sin sonido, suave y breve).
+  function winkAt(card) {
+    const w = document.createElement("span");
+    w.className = "wink";
+    w.textContent = "😉";
+    card.appendChild(w);
+    w.addEventListener("animationend", () => w.remove());
   }
 
   // Pequeña pista visual: parpadea suavemente el botón de adultos
