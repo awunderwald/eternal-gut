@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#FDF6EC">
+<title>Reino Animal · Animal Kingdom</title>
+<meta name="description" content="App suave y gentil para que niños menores de 5 años conozcan los animales: fotos realistas, sonidos y videos con licencia libre.">
+<style>
+/* ============================================================
+   Diseño gentil para menores de 5 años:
+   - Paleta pastel de bajo contraste agresivo, sin rojos intensos
+   - Transiciones lentas (0.4-0.6s), sin parpadeos ni animaciones bruscas
+   - Tipografía grande y redondeada, botones de mínimo 56px
+   ============================================================ */
+:root {
+  --bg: #FDF6EC;
+  --card: #FFFFFF;
+  --ink: #4A4238;
+  --ink-soft: #8A7E6E;
+  --accent: #7FB685;
+  --accent-soft: #DCEEDD;
+  --sun: #F6C667;
+  --sun-soft: #FBEBC9;
+  --sky: #9BC4E2;
+  --sky-soft: #E3F0FA;
+  --rose-soft: #F8E3DC;
+  --radius: 26px;
+  --trans: 0.45s ease;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  font-family: "Comic Sans MS", "Chalkboard SE", -apple-system, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+button { font-family: inherit; border: none; cursor: pointer; background: none; color: inherit; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Pantalla de inicio ---------- */
+#home { max-width: 640px; margin: 0 auto; padding: 18px 16px 60px; }
+.top-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 2px 14px;
+}
+.app-title { font-size: 1.55rem; font-weight: 700; letter-spacing: 0.5px; }
+.app-title small { display: block; font-size: 0.8rem; font-weight: 400; color: var(--ink-soft); }
+.top-controls { display: flex; gap: 10px; align-items: center; }
+.lang-toggle {
+  display: flex; background: var(--card); border-radius: 50px; overflow: hidden;
+  box-shadow: 0 3px 10px rgba(74,66,56,0.08);
+}
+.lang-toggle button {
+  padding: 10px 14px; font-size: 1rem; transition: background var(--trans);
+  min-height: 44px;
+}
+.lang-toggle button.on { background: var(--accent-soft); font-weight: 700; }
+.gear-btn {
+  width: 52px; height: 52px; border-radius: 50%; background: var(--card);
+  font-size: 1.4rem; box-shadow: 0 3px 10px rgba(74,66,56,0.08);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--trans);
+}
+.gear-btn:active { transform: scale(0.94); }
+.plan-chip {
+  display: inline-block; margin: 0 0 16px; padding: 8px 16px; border-radius: 50px;
+  background: var(--sun-soft); color: var(--ink); font-size: 0.85rem; font-weight: 700;
+}
+.cat-title {
+  font-size: 1.15rem; font-weight: 700; color: var(--ink-soft);
+  margin: 22px 4px 12px; display: flex; align-items: center; gap: 8px;
+}
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.animal-card {
+  position: relative; border-radius: var(--radius); overflow: hidden;
+  background: var(--card); box-shadow: 0 6px 18px rgba(74,66,56,0.10);
+  aspect-ratio: 1 / 1.05; transition: transform var(--trans), opacity var(--trans);
+  padding: 0; text-align: left; width: 100%;
+}
+.animal-card:active { transform: scale(0.96); }
+.animal-card img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.animal-card .card-name {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 26px 14px 12px; color: #fff; font-size: 1.25rem; font-weight: 700;
+  background: linear-gradient(transparent, rgba(60,50,40,0.65));
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+.animal-card.locked img { filter: grayscale(0.9) brightness(1.1); opacity: 0.55; }
+.animal-card.locked::after {
+  content: "🔒"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-size: 2.2rem; opacity: 0.8;
+}
+
+/* ---------- Pantalla del animal ---------- */
+#detail {
+  position: fixed; inset: 0; background: var(--bg); z-index: 100;
+  display: none; flex-direction: column; overflow-y: auto;
+  opacity: 0; transition: opacity var(--trans);
+}
+#detail.open { display: flex; }
+#detail.shown { opacity: 1; }
+.detail-inner { max-width: 640px; margin: 0 auto; width: 100%; padding-bottom: 50px; }
+.hero {
+  position: relative; width: 100%; height: 58vh; min-height: 320px;
+  border-radius: 0 0 34px 34px; overflow: hidden; background: var(--sky-soft);
+}
+.hero img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+.hero.pulse img { transform: scale(1.04); }
+.hero video { width: 100%; height: 100%; object-fit: contain; background: #2E2A26; display: block; }
+.back-btn {
+  position: absolute; top: 16px; left: 16px; z-index: 5;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,0.92); font-size: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--trans);
+}
+.back-btn:active { transform: scale(0.92); }
+.hero-hint {
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+  background: rgba(255,255,255,0.9); border-radius: 50px; padding: 8px 18px;
+  font-size: 0.9rem; color: var(--ink-soft); white-space: nowrap;
+}
+.animal-name {
+  text-align: center; font-size: 2.1rem; font-weight: 800; margin: 18px 16px 2px;
+}
+.animal-sound-name { text-align: center; color: var(--ink-soft); font-size: 1rem; margin-bottom: 14px; }
+
+.control-row {
+  display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+  padding: 4px 16px 6px;
+}
+.big-btn {
+  min-height: 64px; min-width: 64px; padding: 10px 22px; border-radius: 50px;
+  background: var(--card); box-shadow: 0 5px 14px rgba(74,66,56,0.10);
+  font-size: 1.05rem; font-weight: 700; color: var(--ink);
+  display: flex; align-items: center; gap: 8px; justify-content: center;
+  transition: transform var(--trans), background var(--trans);
+}
+.big-btn:active { transform: scale(0.94); }
+.big-btn.primary { background: var(--accent-soft); }
+.big-btn .ico { font-size: 1.5rem; }
+.video-numbers { display: flex; justify-content: center; gap: 12px; padding: 10px 16px 4px; }
+.vnum {
+  width: 60px; height: 60px; border-radius: 50%; font-size: 1.4rem; font-weight: 800;
+  background: var(--card); color: var(--ink); box-shadow: 0 4px 12px rgba(74,66,56,0.10);
+  transition: background var(--trans), transform var(--trans);
+}
+.vnum:active { transform: scale(0.92); }
+.vnum.on { background: var(--sun); color: #fff; }
+.vnum.locked { opacity: 0.35; }
+
+.fact-card {
+  margin: 20px 16px 0; background: var(--card); border-radius: var(--radius);
+  padding: 20px 20px 16px; box-shadow: 0 6px 18px rgba(74,66,56,0.08);
+  position: relative;
+}
+.fact-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.fact-title { font-size: 1rem; font-weight: 800; color: var(--ink-soft); }
+.fact-lang { display: flex; gap: 6px; }
+.fact-lang button {
+  font-size: 1.05rem; padding: 6px 10px; border-radius: 50px; min-height: 40px;
+  background: var(--bg); transition: background var(--trans);
+}
+.fact-lang button.on { background: var(--sky-soft); box-shadow: inset 0 0 0 2px var(--sky); }
+.fact-row { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; font-size: 1.05rem; line-height: 1.45; }
+.fact-row .emoji { font-size: 1.3rem; flex: none; }
+.fact-note { margin-top: 10px; font-size: 0.8rem; color: var(--ink-soft); font-style: italic; }
+
+/* ---------- Mensaje gentil de límite ---------- */
+#limit-msg {
+  position: fixed; inset: 0; z-index: 300; background: rgba(253,246,236,0.97);
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 30px; gap: 16px;
+}
+#limit-msg.open { display: flex; }
+#limit-msg .moon { font-size: 4rem; }
+#limit-msg h2 { font-size: 1.5rem; }
+#limit-msg p { color: var(--ink-soft); max-width: 420px; line-height: 1.5; }
+
+/* ---------- Panel para padres ---------- */
+#gate, #parents {
+  position: fixed; inset: 0; z-index: 200; background: rgba(74,66,56,0.35);
+  display: none; align-items: flex-end; justify-content: center;
+}
+#gate.open, #parents.open { display: flex; }
+.sheet {
+  background: var(--bg); width: 100%; max-width: 640px;
+  border-radius: 30px 30px 0 0; padding: 24px 22px 40px;
+  max-height: 88vh; overflow-y: auto;
+}
+.sheet h2 { font-size: 1.3rem; margin-bottom: 6px; }
+.sheet .sub { color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 18px; line-height: 1.45; }
+.hold-btn {
+  width: 100%; min-height: 70px; border-radius: var(--radius);
+  background: var(--accent-soft); font-size: 1.1rem; font-weight: 700;
+  position: relative; overflow: hidden;
+}
+.hold-btn .fill {
+  position: absolute; inset: 0; width: 0%; background: var(--accent);
+  opacity: 0.5; transition: width 0.1s linear;
+}
+.hold-btn span { position: relative; z-index: 1; }
+.close-x {
+  float: right; width: 46px; height: 46px; border-radius: 50%;
+  background: var(--card); font-size: 1.1rem;
+}
+.plan-list { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
+.plan-item {
+  text-align: left; background: var(--card); border-radius: var(--radius);
+  padding: 16px 18px; box-shadow: 0 4px 12px rgba(74,66,56,0.07);
+  border: 3px solid transparent; transition: border-color var(--trans); width: 100%;
+}
+.plan-item.on { border-color: var(--accent); }
+.plan-item .p-name { font-weight: 800; font-size: 1.05rem; display: flex; justify-content: space-between; }
+.plan-item .p-price { color: var(--accent); }
+.plan-item .p-desc { color: var(--ink-soft); font-size: 0.85rem; margin-top: 4px; line-height: 1.4; }
+.parents-stats {
+  background: var(--sun-soft); border-radius: var(--radius); padding: 14px 18px;
+  font-size: 0.9rem; margin: 16px 0 4px; line-height: 1.6;
+}
+.credits { margin-top: 22px; }
+.credits summary { font-size: 0.9rem; font-weight: 700; color: var(--ink-soft); cursor: pointer; padding: 8px 0; }
+.credits p, .credits li { font-size: 0.78rem; color: var(--ink-soft); line-height: 1.5; }
+.credits ul { padding-left: 18px; margin-top: 6px; }
+.credits a { color: var(--accent); word-break: break-all; }
+
+footer.home-foot { text-align: center; color: var(--ink-soft); font-size: 0.75rem; margin-top: 34px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- ======================= INICIO ======================= -->
+<main id="home">
+  <div class="top-bar">
+    <div class="app-title" data-i18n="appTitle">Reino Animal<small data-i18n="appSub">para pequeños exploradores</small></div>
+    <div class="top-controls">
+      <div class="lang-toggle" aria-label="Idioma / Language">
+        <button id="lang-es" onclick="setUiLang('es')">🇨🇱 ES</button>
+        <button id="lang-en" onclick="setUiLang('en')">🇺🇸 EN</button>
+      </div>
+      <button class="gear-btn" id="gear" aria-label="Zona de padres">⚙️</button>
+    </div>
+  </div>
+  <span class="plan-chip" id="plan-chip"></span>
+  <div id="categories"></div>
+  <footer class="home-foot" id="home-foot"></footer>
+</main>
+
+<!-- ======================= DETALLE DEL ANIMAL ======================= -->
+<section id="detail" aria-modal="true">
+  <div class="detail-inner">
+    <div class="hero" id="hero">
+      <button class="back-btn" onclick="closeDetail()" aria-label="Volver">←</button>
+      <img id="hero-img" alt="" draggable="false">
+      <video id="hero-video" playsinline style="display:none"></video>
+      <div class="hero-hint" id="hero-hint"></div>
+    </div>
+    <h1 class="animal-name" id="animal-name"></h1>
+    <div class="animal-sound-name" id="animal-sound-name"></div>
+
+    <div class="control-row">
+      <button class="big-btn primary" id="btn-sound" onclick="playSound()"><span class="ico">🔊</span><span id="btn-sound-label"></span></button>
+      <button class="big-btn" id="btn-playpause" onclick="togglePlayPause()"><span class="ico" id="pp-ico">▶️</span><span id="pp-label"></span></button>
+      <button class="big-btn" id="btn-replay" onclick="replayVideo()" style="display:none"><span class="ico">🔁</span><span id="replay-label"></span></button>
+    </div>
+    <div class="video-numbers" id="video-numbers"></div>
+
+    <div class="fact-card">
+      <div class="fact-header">
+        <div class="fact-title" id="fact-title"></div>
+        <div class="fact-lang" aria-label="Idioma del texto">
+          <button id="flang-es" onclick="setFactLang('es')">🇨🇱</button>
+          <button id="flang-en" onclick="setFactLang('en')">🇺🇸</button>
+        </div>
+      </div>
+      <div id="fact-rows"></div>
+      <div class="fact-note" id="fact-note"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= LÍMITE DIARIO (mensaje gentil) ======================= -->
+<div id="limit-msg">
+  <div class="moon">🌙</div>
+  <h2 id="limit-title"></h2>
+  <p id="limit-text"></p>
+  <button class="big-btn primary" onclick="closeLimit()"><span id="limit-ok"></span></button>
+</div>
+
+<!-- ======================= PUERTA PARENTAL ======================= -->
+<div id="gate">
+  <div class="sheet">
+    <button class="close-x" onclick="closeGate()">✕</button>
+    <h2 id="gate-title"></h2>
+    <p class="sub" id="gate-sub"></p>
+    <button class="hold-btn" id="hold-btn"><div class="fill" id="hold-fill"></div><span id="hold-label"></span></button>
+  </div>
+</div>
+
+<!-- ======================= PANEL PARA PADRES ======================= -->
+<div id="parents">
+  <div class="sheet">
+    <button class="close-x" onclick="closeParents()">✕</button>
+    <h2 id="parents-title"></h2>
+    <p class="sub" id="parents-sub"></p>
+    <div class="plan-list" id="plan-list"></div>
+    <div class="parents-stats" id="parents-stats"></div>
+    <details class="credits">
+      <summary id="credits-title"></summary>
+      <p id="credits-text"></p>
+      <ul id="credits-list"></ul>
+    </details>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   PLANES DE SUSCRIPCIÓN (prototipo)
+   El "Modo Dios" tiene todo desbloqueado y además permite
+   simular cada plan para ver sus limitaciones.
+   ============================================================ */
+const PLANS = {
+  gratis: {
+    animals: ["lion", "cat"],
+    videosPerAnimal: 1,
+    playsPerDay: 3,
+    price: { es: "Gratis", en: "Free" },
+    name: { es: "Gratis", en: "Free" },
+    desc: {
+      es: "2 animales · 1 video por animal · 3 reproducciones al día",
+      en: "2 animals · 1 video per animal · 3 plays per day"
+    }
+  },
+  mensual: {
+    animals: "all",
+    videosPerAnimal: 2,
+    playsPerDay: 10,
+    price: { es: "$2.990 / mes", en: "$3.99 / mo" },
+    name: { es: "Mensual", en: "Monthly" },
+    desc: {
+      es: "Todos los animales · 2 videos por animal · 10 reproducciones al día",
+      en: "All animals · 2 videos per animal · 10 plays per day"
+    }
+  },
+  anual: {
+    animals: "all",
+    videosPerAnimal: 3,
+    playsPerDay: Infinity,
+    price: { es: "$19.990 / año", en: "$24.99 / yr" },
+    name: { es: "Anual", en: "Yearly" },
+    desc: {
+      es: "Todos los animales · 3 videos por animal · reproducciones ilimitadas",
+      en: "All animals · 3 videos per animal · unlimited plays"
+    }
+  },
+  vitalicio: {
+    animals: "all",
+    videosPerAnimal: 3,
+    playsPerDay: Infinity,
+    price: { es: "$49.990 una vez", en: "$59.99 once" },
+    name: { es: "De por vida", en: "Lifetime" },
+    desc: {
+      es: "Todo desbloqueado para siempre + animales nuevos cada mes",
+      en: "Everything unlocked forever + new animals every month"
+    }
+  },
+  dios: {
+    animals: "all",
+    videosPerAnimal: 3,
+    playsPerDay: Infinity,
+    price: { es: "Prototipo", en: "Prototype" },
+    name: { es: "⚡ Modo Dios", en: "⚡ God Mode" },
+    desc: {
+      es: "Acceso total para pruebas. Cambia de plan aquí para simular sus límites.",
+      en: "Full access for testing. Switch plans here to simulate their limits."
+    }
+  }
+};
+
+/* ============================================================
+   ANIMALES — todos los medios son de Wikimedia Commons
+   (licencias libres: CC BY / CC BY-SA / dominio público)
+   ============================================================ */
+const ANIMALS = [
+  {
+    id: "lion", cat: "felinos",
+    name: { es: "León", en: "Lion" },
+    soundName: { es: "Rugido", en: "Roar" },
+    facts: {
+      es: [
+        ["⚖️", "Pesa hasta 190 kilos, ¡como dos refrigeradores!"],
+        ["📏", "Mide 1,2 metros de alto hasta el hombro."],
+        ["✨", "Su rugido se escucha a 8 kilómetros de distancia."]
+      ],
+      en: [
+        ["⚖️", "It weighs up to 190 kilos — like two refrigerators!"],
+        ["📏", "It stands 1.2 meters tall at the shoulder."],
+        ["✨", "Its roar can be heard 8 kilometers away."]
+      ]
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg/1280px-020_The_lion_king_Snyggve_in_the_Serengeti_National_Park_Photo_by_Giles_Laurent.jpg",
+    sound: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Lion_raring-sound1TamilNadu178.ogg",
+    videos: [
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5d/Lion_%28Panthera_leo%29.webm/Lion_%28Panthera_leo%29.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/d/de/Lion_%28Panthera_leo%29_walking_on_the_road.webm/Lion_%28Panthera_leo%29_walking_on_the_road.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2d/Lion_cubs_%28Panthera_leo%29.webm/Lion_cubs_%28Panthera_leo%29.webm.480p.vp9.webm"
+    ]
+  },
+  {
+    id: "tiger", cat: "felinos",
+    name: { es: "Tigre", en: "Tiger" },
+    soundName: { es: "Rugido", en: "Roar" },
+    facts: {
+      es: [
+        ["⚖️", "Pesa hasta 220 kilos."],
+        ["📏", "Mide hasta 3 metros de largo, ¡como un auto!"],
+        ["✨", "Es el felino más grande del mundo y le encanta nadar."]
+      ],
+      en: [
+        ["⚖️", "It weighs up to 220 kilos."],
+        ["📏", "It can be 3 meters long — like a car!"],
+        ["✨", "It is the biggest cat in the world and it loves to swim."]
+      ]
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Bengal_tiger_%28Panthera_tigris_tigris%29_female_3_crop.jpg/1280px-Bengal_tiger_%28Panthera_tigris_tigris%29_female_3_crop.jpg",
+    sound: "https://upload.wikimedia.org/wikipedia/commons/2/29/439280_schots_angry-tiger.wav",
+    videos: [
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/8/85/Siberian_tiger_%28Panthera_tigris_altaica%29.webm/Siberian_tiger_%28Panthera_tigris_altaica%29.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/42/Sumatran_tiger_%28Panthera_tigris_sumatrae%29_vocalising.webm/Sumatran_tiger_%28Panthera_tigris_sumatrae%29_vocalising.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/0/04/Siberian_tiger_%28Panthera_tigris_altaica%29_pacing_around.webm/Siberian_tiger_%28Panthera_tigris_altaica%29_pacing_around.webm.480p.vp9.webm"
+    ]
+  },
+  {
+    id: "cheetah", cat: "felinos",
+    name: { es: "Guepardo", en: "Cheetah" },
+    soundName: { es: "Gorjeo", en: "Chirp" },
+    facts: {
+      es: [
+        ["⚖️", "Pesa unos 50 kilos."],
+        ["📏", "Mide 1,2 metros de largo, más su larga cola."],
+        ["✨", "Es el animal más veloz de la tierra: ¡corre a 110 km por hora!"]
+      ],
+      en: [
+        ["⚖️", "It weighs about 50 kilos."],
+        ["📏", "It is 1.2 meters long, plus its long tail."],
+        ["✨", "It is the fastest land animal: it runs at 110 km per hour!"]
+      ]
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Male_cheetah_facing_left_in_South_Africa.jpg/1280px-Male_cheetah_facing_left_in_South_Africa.jpg",
+    sound: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Acoustic-Structure-and-Contextual-Use-of-Calls-by-Captive-Male-and-Female-Cheetahs-%28Acinonyx-pone.0158546.s001.oga",
+    videos: [
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6c/Cheetah_%28Acinonyx_jubatus%29_cub_....webm/Cheetah_%28Acinonyx_jubatus%29_cub_....webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/3/35/Rozi_the_cheetah_running_at_the_Cincinnati_Zoo.webm/Rozi_the_cheetah_running_at_the_Cincinnati_Zoo.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/6/60/Cheetah_%28Acinonyx_jubatus%29_female_calling_cubs_....webm/Cheetah_%28Acinonyx_jubatus%29_female_calling_cubs_....webm.480p.vp9.webm"
+    ]
+  },
+  {
+    id: "cat", cat: "felinos",
+    name: { es: "Gato", en: "Cat" },
+    soundName: { es: "Maullido", en: "Meow" },
+    facts: {
+      es: [
+        ["⚖️", "Pesa unos 4 kilos."],
+        ["📏", "Mide unos 46 centímetros, sin contar la cola."],
+        ["✨", "Duerme hasta 16 horas al día, ¡es un gran dormilón!"]
+      ],
+      en: [
+        ["⚖️", "It weighs about 4 kilos."],
+        ["📏", "It is about 46 centimeters long, not counting the tail."],
+        ["✨", "It sleeps up to 16 hours a day — a big sleepyhead!"]
+      ]
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1280px-Cat_August_2010-4.jpg",
+    sound: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Meow_domestic_cat.ogg",
+    videos: [
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/2/21/Cat_playing_with_a_lizard.webm/Cat_playing_with_a_lizard.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/1/19/Cat_reacting_to_a_fish_tank.webm/Cat_reacting_to_a_fish_tank.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f1/Cat_jumping_backwards.webm/Cat_jumping_backwards.webm.480p.vp9.webm"
+    ]
+  },
+  {
+    id: "elephant", cat: "safari",
+    name: { es: "Elefante", en: "Elephant" },
+    soundName: { es: "Barrito", en: "Trumpet" },
+    facts: {
+      es: [
+        ["⚖️", "Pesa hasta 6.000 kilos, ¡como 4 autos juntos!"],
+        ["📏", "Mide más de 3 metros de alto."],
+        ["✨", "Es el animal terrestre más grande y usa su trompa como una mano."]
+      ],
+      en: [
+        ["⚖️", "It weighs up to 6,000 kilos — like 4 cars together!"],
+        ["📏", "It stands over 3 meters tall."],
+        ["✨", "It is the biggest land animal and uses its trunk like a hand."]
+      ]
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/178_Male_African_bush_elephant_in_Etosha_National_Park_Photo_by_Giles_Laurent.jpg/1280px-178_Male_African_bush_elephant_in_Etosha_National_Park_Photo_by_Giles_Laurent.jpg",
+    sound: "https://upload.wikimedia.org/wikipedia/commons/4/40/Elephant_voice_-_trumpeting.ogg",
+    videos: [
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/d/df/Savanna_Elephant_%28Loxodonta_africana%29_bull_drinking_from_a_rain_puddle.webm/Savanna_Elephant_%28Loxodonta_africana%29_bull_drinking_from_a_rain_puddle.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/5/5e/African_elephant_%28Loxodonta_africana%29_rumbling.webm/African_elephant_%28Loxodonta_africana%29_rumbling.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c3/Savanna_Elephant_%28Loxodonta_africana%29_crossing_Olifants_river_....webm/Savanna_Elephant_%28Loxodonta_africana%29_crossing_Olifants_river_....webm.480p.vp9.webm"
+    ]
+  },
+  {
+    id: "giraffe", cat: "safari",
+    name: { es: "Jirafa", en: "Giraffe" },
+    soundName: { es: "Zumbido", en: "Hum" },
+    facts: {
+      es: [
+        ["⚖️", "Pesa unos 1.200 kilos."],
+        ["📏", "Mide hasta 5,5 metros: ¡el animal más alto del mundo!"],
+        ["✨", "Solo su cuello mide 2 metros, y su lengua es azulada."]
+      ],
+      en: [
+        ["⚖️", "It weighs about 1,200 kilos."],
+        ["📏", "It is up to 5.5 meters tall: the tallest animal in the world!"],
+        ["✨", "Its neck alone is 2 meters long, and its tongue is bluish."]
+      ]
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Giraffe_Mikumi_National_Park.jpg/1280px-Giraffe_Mikumi_National_Park.jpg",
+    sound: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Giraffe_Hum.oga",
+    videos: [
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/8/8a/Feeding_a_giraffe_at_the_Giraffe_Centre_in_Nairobi%2C_Kenya.webm/Feeding_a_giraffe_at_the_Giraffe_Centre_in_Nairobi%2C_Kenya.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d7/Giraffe_%28Giraffa_camelopardalis%29_male_....webm/Giraffe_%28Giraffa_camelopardalis%29_male_....webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/0/09/Nairobi_National_Park_%28August_2025%29_Giraffe_eating.webm/Nairobi_National_Park_%28August_2025%29_Giraffe_eating.webm.480p.vp9.webm"
+    ]
+  },
+  {
+    id: "dolphin", cat: "mar",
+    name: { es: "Delfín", en: "Dolphin" },
+    soundName: { es: "Silbido", en: "Whistle" },
+    facts: {
+      es: [
+        ["⚖️", "Pesa unos 300 kilos."],
+        ["📏", "Mide hasta 3,5 metros de largo."],
+        ["✨", "Conversa con silbidos y descansa con medio cerebro despierto."]
+      ],
+      en: [
+        ["⚖️", "It weighs about 300 kilos."],
+        ["📏", "It is up to 3.5 meters long."],
+        ["✨", "It chats with whistles and rests with half its brain awake."]
+      ]
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Tursiops_truncatus_01.jpg/1280px-Tursiops_truncatus_01.jpg",
+    sound: "https://upload.wikimedia.org/wikipedia/commons/5/5a/161691_felixblume_dolphin-screaming-underwater-in-caribbean-sea-mexico.wav",
+    videos: [
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a5/Aerial_view_of_a_pod_of_Indo-Pacific_bottlenose_dolphins_%28Tursiops_aduncus%29_with_calves_at_Gordon%27s_Bay%2C_Sydney%2C_27_December_2020.webm/Aerial_view_of_a_pod_of_Indo-Pacific_bottlenose_dolphins_%28Tursiops_aduncus%29_with_calves_at_Gordon%27s_Bay%2C_Sydney%2C_27_December_2020.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f0/Bottlenose_dolphin_-_kanagawa_-_2025_March_21.webm/Bottlenose_dolphin_-_kanagawa_-_2025_March_21.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/3/39/Planete_Sauvage_20180608_03.webm/Planete_Sauvage_20180608_03.webm.480p.vp9.webm"
+    ]
+  },
+  {
+    id: "penguin", cat: "mar",
+    name: { es: "Pingüino", en: "Penguin" },
+    soundName: { es: "Llamado", en: "Call" },
+    facts: {
+      es: [
+        ["⚖️", "El pingüino emperador pesa hasta 30 kilos."],
+        ["📏", "Mide hasta 1,2 metros: ¡casi como tú!"],
+        ["✨", "No vuela, pero bajo el agua nada como un torpedo."]
+      ],
+      en: [
+        ["⚖️", "The emperor penguin weighs up to 30 kilos."],
+        ["📏", "It is up to 1.2 meters tall — almost as tall as you!"],
+        ["✨", "It cannot fly, but underwater it swims like a torpedo."]
+      ]
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/a3/Aptenodytes_forsteri_-Snow_Hill_Island%2C_Antarctica_-adults_and_juvenile-8.jpg",
+    sound: "https://upload.wikimedia.org/wikipedia/commons/5/5a/20091121_Little_Penguin_calls_at_St_Kilda_Breakwater.ogg",
+    videos: [
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/b/ba/Penguin_at_Boulders_01.webm/Penguin_at_Boulders_01.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/8/8f/Penguins_slow_motion_video.webm/Penguins_slow_motion_video.webm.480p.vp9.webm",
+      "https://upload.wikimedia.org/wikipedia/commons/transcoded/2/2a/Grooming_penguin_at_Boulders_Beach.webm/Grooming_penguin_at_Boulders_Beach.webm.480p.vp9.webm"
+    ]
+  }
+];
+
+const CATEGORIES = [
+  { id: "felinos", emoji: "🐾", name: { es: "Felinos", en: "Felines" } },
+  { id: "safari",  emoji: "🌿", name: { es: "Safari",  en: "Safari" } },
+  { id: "mar",     emoji: "🌊", name: { es: "Mar y hielo", en: "Sea & ice" } }
+];
+
+/* ============================================================
+   TEXTOS DE LA INTERFAZ (ES / EN)
+   ============================================================ */
+const I18N = {
+  es: {
+    appTitle: "Reino Animal", appSub: "para pequeños exploradores",
+    planChip: "Plan actual",
+    tapHintPhoto: "Toca la foto para escuchar 🔊",
+    sound: "Sonido", play: "Ver video", pause: "Pausa", resume: "Seguir", replay: "Repetir",
+    photo: "Foto",
+    factTitle: "Para que los papás lean 📖",
+    factNote: "Elige la banderita para leerlo en otro idioma.",
+    limitTitle: "¡Hasta mañana, explorador!",
+    limitText: "Ya vimos muchos videos por hoy. Mañana los animales nos esperan con más aventuras.",
+    limitOk: "Está bien 💚",
+    gateTitle: "Zona de padres",
+    gateSub: "Para entrar, mantén presionado el botón durante 3 segundos.",
+    gateHold: "Mantén presionado aquí",
+    parentsTitle: "Zona de padres",
+    parentsSub: "Elige el plan de suscripción. En este prototipo el Modo Dios desbloquea todo y te deja simular los límites de cada plan.",
+    statsToday: "Videos vistos hoy",
+    statsUnlimited: "ilimitado",
+    creditsTitle: "Créditos de fotos, sonidos y videos",
+    creditsText: "Todo el material audiovisual proviene de Wikimedia Commons y tiene licencias libres (Creative Commons o dominio público). Prototipo de bajo costo: no se pagó por ningún contenido.",
+    lockedAnimal: "Este animal se desbloquea con un plan superior 💚",
+    videoNA: "Este video aún no se puede reproducir aquí."
+  },
+  en: {
+    appTitle: "Animal Kingdom", appSub: "for little explorers",
+    planChip: "Current plan",
+    tapHintPhoto: "Tap the photo to listen 🔊",
+    sound: "Sound", play: "Watch video", pause: "Pause", resume: "Resume", replay: "Replay",
+    photo: "Photo",
+    factTitle: "For parents to read 📖",
+    factNote: "Pick a flag to read it in another language.",
+    limitTitle: "See you tomorrow, explorer!",
+    limitText: "We watched a lot of videos today. Tomorrow the animals will be waiting with more adventures.",
+    limitOk: "Okay 💚",
+    gateTitle: "Parents' area",
+    gateSub: "To enter, press and hold the button for 3 seconds.",
+    gateHold: "Press and hold here",
+    parentsTitle: "Parents' area",
+    parentsSub: "Choose the subscription plan. In this prototype, God Mode unlocks everything and lets you simulate each plan's limits.",
+    statsToday: "Videos watched today",
+    statsUnlimited: "unlimited",
+    creditsTitle: "Photo, sound & video credits",
+    creditsText: "All media comes from Wikimedia Commons under free licenses (Creative Commons or public domain). Low-cost prototype: no content was paid for.",
+    lockedAnimal: "This animal unlocks with a higher plan 💚",
+    videoNA: "This video cannot play here yet."
+  }
+};
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("ra_" + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("ra_" + k, JSON.stringify(v)); } catch {} }
+};
+let uiLang = store.get("uiLang", "es");
+let factLang = store.get("factLang", null);   // null = sigue el idioma de la app
+let plan = store.get("plan", "dios");         // prototipo: Modo Dios por defecto
+let current = null;                            // animal abierto
+let currentVideo = 0;
+let mode = "photo";                            // "photo" | "video"
+const audio = new Audio();
+audio.volume = 0.8;                            // volumen gentil, nunca a tope
+
+function t(key) { return I18N[uiLang][key]; }
+function todayKey() { return new Date().toISOString().slice(0, 10); }
+function playsToday() {
+  const d = store.get("plays", {});
+  return d[todayKey()] || 0;
+}
+function addPlay() {
+  const d = {};
+  d[todayKey()] = playsToday() + 1;
+  store.set("plays", d);
+}
+function planOf() { return PLANS[plan]; }
+function animalAllowed(a) {
+  const p = planOf();
+  return p.animals === "all" || p.animals.includes(a.id);
+}
+function videosAllowed() { return planOf().videosPerAnimal; }
+function underDailyLimit() { return playsToday() < planOf().playsPerDay; }
+
+/* ============================================================
+   INICIO
+   ============================================================ */
+function renderHome() {
+  document.getElementById("lang-es").className = uiLang === "es" ? "on" : "";
+  document.getElementById("lang-en").className = uiLang === "en" ? "on" : "";
+  document.querySelector(".app-title").childNodes[0].textContent = t("appTitle");
+  document.querySelector(".app-title small").textContent = t("appSub");
+  document.getElementById("plan-chip").textContent =
+    t("planChip") + ": " + PLANS[plan].name[uiLang];
+
+  const wrap = document.getElementById("categories");
+  wrap.innerHTML = "";
+  for (const c of CATEGORIES) {
+    const h = document.createElement("div");
+    h.className = "cat-title";
+    h.textContent = c.emoji + " " + c.name[uiLang];
+    wrap.appendChild(h);
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    for (const a of ANIMALS.filter(x => x.cat === c.id)) {
+      const locked = !animalAllowed(a);
+      const card = document.createElement("button");
+      card.className = "animal-card" + (locked ? " locked" : "");
+      card.setAttribute("aria-label", a.name[uiLang]);
+      card.innerHTML =
+        '<img loading="lazy" src="' + a.image + '" alt="' + a.name[uiLang] + '">' +
+        '<span class="card-name">' + a.name[uiLang] + "</span>";
+      card.onclick = () => locked ? showLockedMsg() : openDetail(a);
+      grid.appendChild(card);
+    }
+    wrap.appendChild(grid);
+  }
+  document.getElementById("home-foot").innerHTML =
+    "Prototipo · " + PLANS.dios.name[uiLang] +
+    "<br>Wikimedia Commons · Creative Commons / " + (uiLang === "es" ? "dominio público" : "public domain");
+}
+
+function setUiLang(l) {
+  uiLang = l;
+  store.set("uiLang", l);
+  renderHome();
+  if (current) renderDetail();
+  renderParents();
+}
+
+function showLockedMsg() {
+  openLimit(t("lockedAnimal"), "🔒", PLANS[plan].name[uiLang]);
+}
+
+/* ============================================================
+   DETALLE DEL ANIMAL
+   ============================================================ */
+const detail = document.getElementById("detail");
+const heroImg = document.getElementById("hero-img");
+const heroVideo = document.getElementById("hero-video");
+
+function openDetail(a) {
+  current = a;
+  currentVideo = 0;
+  mode = "photo";
+  detail.classList.add("open");
+  requestAnimationFrame(() => detail.classList.add("shown"));
+  renderDetail();
+  detail.scrollTop = 0;
+}
+
+function closeDetail() {
+  stopAll();
+  detail.classList.remove("shown");
+  setTimeout(() => { detail.classList.remove("open"); current = null; }, 450);
+}
+
+function stopAll() {
+  audio.pause();
+  heroVideo.pause();
+  heroVideo.removeAttribute("src");
+  heroVideo.load();
+}
+
+function effFactLang() { return factLang || uiLang; }
+
+function renderDetail() {
+  const a = current;
+  if (!a) return;
+  document.getElementById("animal-name").textContent = a.name[uiLang];
+  document.getElementById("animal-sound-name").textContent = "🔉 " + a.soundName[uiLang];
+  document.getElementById("btn-sound-label").textContent = t("sound");
+  document.getElementById("replay-label").textContent = t("replay");
+  document.getElementById("fact-title").textContent = t("factTitle");
+  document.getElementById("fact-note").textContent = t("factNote");
+  document.getElementById("flang-es").className = effFactLang() === "es" ? "on" : "";
+  document.getElementById("flang-en").className = effFactLang() === "en" ? "on" : "";
+
+  const rows = document.getElementById("fact-rows");
+  rows.innerHTML = "";
+  for (const [emoji, text] of a.facts[effFactLang()]) {
+    const r = document.createElement("div");
+    r.className = "fact-row";
+    r.innerHTML = '<span class="emoji">' + emoji + "</span><span>" + text + "</span>";
+    rows.appendChild(r);
+  }
+
+  // selector de videos 1 · 2 · 3 (los planes limitados bloquean los últimos)
+  const nums = document.getElementById("video-numbers");
+  nums.innerHTML = "";
+  const allowed = videosAllowed();
+  a.videos.forEach((_, i) => {
+    const b = document.createElement("button");
+    b.className = "vnum" + (mode === "video" && i === currentVideo ? " on" : "") + (i >= allowed ? " locked" : "");
+    b.textContent = i + 1;
+    b.onclick = () => i >= allowed ? showLockedMsg() : startVideo(i);
+    nums.appendChild(b);
+  });
+
+  renderHeroMode();
+}
+
+function renderHeroMode() {
+  const a = current;
+  const hint = document.getElementById("hero-hint");
+  const ppBtn = document.getElementById("btn-playpause");
+  const replayBtn = document.getElementById("btn-replay");
+  if (mode === "photo") {
+    heroImg.src = a.image;
+    heroImg.alt = a.name[uiLang];
+    heroImg.style.display = "block";
+    heroVideo.style.display = "none";
+    hint.style.display = "block";
+    hint.textContent = t("tapHintPhoto");
+    document.getElementById("pp-ico").textContent = "▶️";
+    document.getElementById("pp-label").textContent = t("play");
+    replayBtn.style.display = "none";
+    ppBtn.onclick = () => startVideo(currentVideo);
+  } else {
+    heroImg.style.display = "none";
+    heroVideo.style.display = "block";
+    hint.style.display = "none";
+    replayBtn.style.display = "flex";
+    ppBtn.onclick = togglePlayPause;
+    updatePpButton();
+  }
+}
+
+function updatePpButton() {
+  const paused = heroVideo.paused;
+  document.getElementById("pp-ico").textContent = paused ? "▶️" : "⏸️";
+  document.getElementById("pp-label").textContent = paused ? t("resume") : t("pause");
+}
+
+heroVideo.addEventListener("play", updatePpButton);
+heroVideo.addEventListener("pause", updatePpButton);
+heroVideo.addEventListener("error", () => {
+  if (mode === "video") {
+    mode = "photo";
+    renderDetail();
+    openLimit(t("videoNA"), "🙈", "");
+  }
+});
+
+/* La foto grande reproduce el sonido característico */
+document.getElementById("hero").addEventListener("click", (e) => {
+  if (mode === "photo" && e.target === heroImg) playSound();
+});
+
+function playSound() {
+  const a = current;
+  if (!a) return;
+  audio.src = a.sound;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+  const hero = document.getElementById("hero");
+  hero.classList.add("pulse");
+  setTimeout(() => hero.classList.remove("pulse"), 650);
+}
+
+function startVideo(i) {
+  if (!underDailyLimit()) { openLimit(t("limitText"), "🌙", t("limitTitle")); return; }
+  audio.pause();
+  currentVideo = i;
+  mode = "video";
+  addPlay();
+  heroVideo.src = current.videos[i];
+  heroVideo.play().catch(() => {});
+  renderDetail();
+}
+
+function togglePlayPause() {
+  if (mode !== "video") return;
+  if (heroVideo.paused) heroVideo.play().catch(() => {}); else heroVideo.pause();
+}
+
+function replayVideo() {
+  if (mode !== "video") return;
+  if (!underDailyLimit()) { openLimit(t("limitText"), "🌙", t("limitTitle")); return; }
+  addPlay();
+  heroVideo.currentTime = 0;
+  heroVideo.play().catch(() => {});
+}
+
+function setFactLang(l) {
+  factLang = l;
+  store.set("factLang", l);
+  renderDetail();
+}
+
+/* ============================================================
+   MENSAJE GENTIL (límite diario / animal bloqueado)
+   ============================================================ */
+function openLimit(text, emoji, title) {
+  document.getElementById("limit-title").textContent = title || t("limitTitle");
+  document.getElementById("limit-text").textContent = text;
+  document.querySelector("#limit-msg .moon").textContent = emoji || "🌙";
+  document.getElementById("limit-ok").textContent = t("limitOk");
+  document.getElementById("limit-msg").classList.add("open");
+}
+function closeLimit() { document.getElementById("limit-msg").classList.remove("open"); }
+
+/* ============================================================
+   PUERTA PARENTAL: mantener presionado 3 segundos
+   ============================================================ */
+const gate = document.getElementById("gate");
+const holdBtn = document.getElementById("hold-btn");
+const holdFill = document.getElementById("hold-fill");
+let holdTimer = null, holdStart = 0;
+
+document.getElementById("gear").addEventListener("click", () => {
+  document.getElementById("gate-title").textContent = t("gateTitle");
+  document.getElementById("gate-sub").textContent = t("gateSub");
+  document.getElementById("hold-label").textContent = t("gateHold");
+  holdFill.style.width = "0%";
+  gate.classList.add("open");
+});
+function closeGate() { gate.classList.remove("open"); stopHold(); }
+
+function startHold() {
+  holdStart = Date.now();
+  holdTimer = setInterval(() => {
+    const pct = Math.min(100, (Date.now() - holdStart) / 3000 * 100);
+    holdFill.style.width = pct + "%";
+    if (pct >= 100) { stopHold(); closeGate(); openParents(); }
+  }, 80);
+}
+function stopHold() {
+  clearInterval(holdTimer);
+  holdTimer = null;
+  holdFill.style.width = "0%";
+}
+holdBtn.addEventListener("pointerdown", startHold);
+holdBtn.addEventListener("pointerup", stopHold);
+holdBtn.addEventListener("pointerleave", stopHold);
+holdBtn.addEventListener("pointercancel", stopHold);
+
+/* ============================================================
+   PANEL PARA PADRES: planes, estadísticas y créditos
+   ============================================================ */
+function openParents() { renderParents(); document.getElementById("parents").classList.add("open"); }
+function closeParents() { document.getElementById("parents").classList.remove("open"); }
+
+function renderParents() {
+  document.getElementById("parents-title").textContent = t("parentsTitle");
+  document.getElementById("parents-sub").textContent = t("parentsSub");
+
+  const list = document.getElementById("plan-list");
+  list.innerHTML = "";
+  for (const [id, p] of Object.entries(PLANS)) {
+    const b = document.createElement("button");
+    b.className = "plan-item" + (plan === id ? " on" : "");
+    b.innerHTML =
+      '<div class="p-name"><span>' + p.name[uiLang] + '</span><span class="p-price">' + p.price[uiLang] + "</span></div>" +
+      '<div class="p-desc">' + p.desc[uiLang] + "</div>";
+    b.onclick = () => { plan = id; store.set("plan", id); renderParents(); renderHome(); if (current) renderDetail(); };
+    list.appendChild(b);
+  }
+
+  const lim = planOf().playsPerDay;
+  document.getElementById("parents-stats").innerHTML =
+    "📊 " + t("statsToday") + ": <strong>" + playsToday() + "</strong> / " +
+    (lim === Infinity ? t("statsUnlimited") : lim);
+
+  document.getElementById("credits-title").textContent = t("creditsTitle");
+  document.getElementById("credits-text").textContent = t("creditsText");
+  const ul = document.getElementById("credits-list");
+  ul.innerHTML = "";
+  for (const a of ANIMALS) {
+    const li = document.createElement("li");
+    const refs = [a.image, a.sound, ...a.videos].map(commonsPage);
+    li.innerHTML = "<strong>" + a.name[uiLang] + ":</strong> " +
+      refs.map((u, i) => '<a href="' + u + '" target="_blank" rel="noopener">[' + (i + 1) + "]</a>").join(" ");
+    ul.appendChild(li);
+  }
+}
+
+/* URL del archivo en Commons (para atribución) a partir de la URL del medio */
+function commonsPage(url) {
+  let f = url.split("/").pop();
+  const m = f.match(/^(.+\.(webm|ogv))\.\d+p.*$/i);
+  if (m) f = m[1];
+  f = f.replace(/^\d+px-/, "");
+  if (url.includes("/thumb/")) {
+    const parts = url.split("/");
+    f = parts[parts.length - 2];
+  }
+  return "https://commons.wikimedia.org/wiki/File:" + f;
+}
+
+/* ============================================================
+   ARRANQUE
+   ============================================================ */
+renderHome();
+</script>
+</body>
+</html>
