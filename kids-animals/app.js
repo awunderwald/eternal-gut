@@ -16,6 +16,19 @@
   const FLAGS = { es: "🇪🇸", en: "🇺🇸" };
   const LANG_NAME = { es: "Español", en: "English" };
 
+  // Color temático por grupo (calza con los acentos de la pantalla de inicio).
+  // Se usa para teñir suavemente la pantalla de detalle de cada animal.
+  const CATEGORY_COLOR = {
+    felinos: "#f3a13c",
+    granja: "#7fb069",
+    oceano: "#4aa6c4",
+    sabana: "#e0a73e",
+    aves: "#ec8a76",
+    bosque: "#8a9a5b",
+    selva: "#6aa86f",
+    dinosaurios: "#a98bd4",
+  };
+
   // ---------- Estado ----------
   const today = () => new Date().toISOString().slice(0, 10);
 
@@ -174,6 +187,9 @@
   function openAnimal(catId, animalId) {
     const animal = findAnimal(catId, animalId);
     view = { screen: "animal", categoryId: catId, animalId, videoIndex: 0 };
+
+    // Tinte temático suave según el grupo (sabana, océano, bosque…).
+    $("#screen-animal").style.setProperty("--theme", CATEGORY_COLOR[catId] || "#7fb069");
 
     $("#animal-topname").textContent = "";
     $("#animal-name").textContent = animal.name[state.knowledgeLang];

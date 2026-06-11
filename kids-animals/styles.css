@@ -420,11 +420,24 @@ body::after {
 }
 
 /* ---------- Detalle del animal ---------- */
+/* Fondo temático suave por grupo (lo define --theme desde app.js). */
+#screen-animal {
+  --theme: #7fb069;
+}
+#screen-animal.active {
+  background: radial-gradient(
+    135% 48% at 50% -4%,
+    color-mix(in srgb, var(--theme) 28%, transparent) 0%,
+    transparent 62%
+  );
+}
+
 .detail-hero {
   position: relative;
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: var(--shadow-lg), var(--ring-light);
+  box-shadow: var(--shadow-lg),
+    0 0 0 4px color-mix(in srgb, var(--theme) 22%, transparent), var(--ring-light);
   background: #1a1612;
 }
 .detail-hero img,
@@ -472,7 +485,7 @@ body::after {
   text-align: center;
   font-size: 2.25rem;
   font-weight: 800;
-  color: var(--leaf-dark);
+  color: color-mix(in srgb, var(--theme, var(--leaf)) 62%, var(--ink));
   margin: 18px 0 6px;
   letter-spacing: -0.4px;
 }
