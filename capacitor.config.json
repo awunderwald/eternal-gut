@@ -1,0 +1,13 @@
+{
+  "appId": "com.animalitos.kids",
+  "appName": "Animalitos",
+  "webDir": "kids-animals",
+  "backgroundColor": "#fdf6ec",
+  "android": {
+    "backgroundColor": "#fdf6ec"
+  },
+  "ios": {
+    "backgroundColor": "#fdf6ec",
+    "contentInset": "always"
+  }
+}

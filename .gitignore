@@ -1,0 +1,16 @@
+# Dependencias
+node_modules/
+
+# Proyectos nativos generados por Capacitor (se regeneran con `npx cap add`)
+/android/
+/ios/
+
+# Builds / temporales
+dist/
+.DS_Store
+*.log
+npm-debug.log*
+
+# Editores
+.vscode/
+.idea/

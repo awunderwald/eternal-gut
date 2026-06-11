@@ -100,9 +100,15 @@ libres (Creative Commons / dominio público). Los videos usan la versión
 > propio) y mostrar la atribución de cada autor según su licencia, en lugar de
 > enlazar directo a Commons.
 
-## 🚀 Siguientes pasos sugeridos
+## 🚀 Siguientes pasos (ver `CLAUDE.md` y `SETUP.md` en la raíz)
 
-1. Reemplazar/ampliar medios y grupos (aves, granja, océano, dinosaurios…).
-2. Suscripciones reales con Stripe o las tiendas (Google Play / App Store).
-3. Empaquetar como app nativa con **Capacitor** para publicar en las tiendas.
-4. Modo offline de medios (descargar un grupo para usar sin internet).
+Decisiones cerradas: **sin cuenta** (cero datos personales del niño), **app para
+niños**, **sin anuncios**, monetización **solo por suscripción** tras control
+parental, **offline-first**, y empaque **multiplataforma con Capacitor**
+(Google Play + App Store).
+
+1. **F2** — Empaquetar con Capacitor y correr en un teléfono Android (`SETUP.md`).
+2. **F3** — Descargas offline de medios (ver un grupo sin internet).
+3. **F4** — Suscripciones (Play Billing / StoreKit) mensual/anual/lifetime, tras control parental.
+4. **F5** — Google Cast / AirPlay a la TV.
+5. **F6** — Pulido, pantalla de **atribuciones**, política de privacidad, IARC y Data safety para publicar.
