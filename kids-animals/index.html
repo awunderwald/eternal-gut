@@ -30,6 +30,7 @@
             <span class="tagline" data-i18n="tagline">Conoce el reino animal</span>
           </span>
         </div>
+        <button id="btn-favorites" class="round-btn" aria-label="Favoritos">❤️</button>
         <button id="btn-parents" class="round-btn" aria-label="Para adultos">⚙️</button>
       </div>
       <h2 class="hint" data-i18n="chooseCategory">Elige un grupo</h2>
@@ -51,6 +52,7 @@
       <div class="topbar">
         <button id="btn-back-cat" class="round-btn" aria-label="Volver">⬅️</button>
         <h2 id="animal-topname" style="flex:1;"></h2>
+        <button id="btn-fav-toggle" class="round-btn" aria-label="Favorito">🤍</button>
       </div>
 
       <div class="detail-hero">
@@ -75,7 +77,28 @@
           <button id="flag-toggle" class="flag-toggle"></button>
         </div>
         <p id="fact-text" class="fact-text"></p>
+        <a id="fact-source" class="fact-source" target="_blank" rel="noopener"></a>
       </div>
+    </section>
+
+    <!-- ============ PANTALLA: FAVORITOS ============ -->
+    <section id="screen-favorites" class="screen">
+      <div class="topbar">
+        <button id="btn-back-fav" class="round-btn" aria-label="Volver">⬅️</button>
+        <h2 data-i18n="favorites">Favoritos</h2>
+      </div>
+      <p id="fav-empty" class="hint" data-i18n="favEmpty"></p>
+      <div id="favorites-grid" class="animal-grid"></div>
+    </section>
+
+    <!-- ============ PANTALLA: CRÉDITOS ============ -->
+    <section id="screen-credits" class="screen">
+      <div class="topbar">
+        <button id="btn-back-credits" class="round-btn" aria-label="Volver">⬅️</button>
+        <h2 data-i18n="credits">Créditos</h2>
+      </div>
+      <p class="hint" data-i18n="creditsIntro"></p>
+      <div id="credits-list" class="credits-list"></div>
     </section>
 
   </div>
@@ -110,6 +133,8 @@
         <div id="plan-list" class="plan-list"></div>
         <p class="modal-note" data-i18n="planNote"></p>
 
+        <button id="btn-credits" class="pill-btn" style="width:100%;justify-content:center;margin-top:18px;" data-i18n="creditsBtn">🎬 Créditos de medios</button>
+
         <div class="modal-actions">
           <button id="settings-close" class="pill-btn primary" data-i18n="close">Cerrar</button>
         </div>
@@ -119,6 +144,8 @@
 
   <script src="data.js"></script>
   <script src="i18n.js"></script>
+  <script src="sources.js"></script>
+  <script src="attributions.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

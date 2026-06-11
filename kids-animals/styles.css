@@ -839,3 +839,59 @@ body::after {
     transition-duration: 0.08s !important;
   }
 }
+
+/* ---------- Fuente del dato (Pacto de Honestidad) ---------- */
+.fact-source {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1.5px dotted var(--ink-soft);
+  padding-bottom: 1px;
+}
+.fact-source:active {
+  opacity: 0.6;
+}
+
+/* ---------- Precio en el selector de planes ---------- */
+.plan-option .pprice {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--leaf-dark);
+  white-space: nowrap;
+  margin-left: 6px;
+}
+
+/* ---------- Pantalla de créditos ---------- */
+.credits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.credit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  background: linear-gradient(165deg, #fffdf9, #fbf2e3);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm), var(--ring-light);
+  padding: 14px 16px;
+  transition: transform 0.3s var(--spring);
+}
+.credit-row:active {
+  transform: scale(0.98);
+}
+.credit-file {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--ink);
+  word-break: break-word;
+}
+.credit-meta {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}

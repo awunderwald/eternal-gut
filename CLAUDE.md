@@ -191,13 +191,21 @@ Cada fase: objetivo · entregable verificable · criterio de "terminado".
 
 ---
 
-## 9. Preguntas abiertas (pendientes de decisión)
+## 9. Decisiones tomadas + propuestas por confirmar
 
-1. **`appId`** definitivo (reverse-domain), ej. `com.animalitos.kids`. ¿Tienes un
-   dominio o nombre de marca preferido?
-2. **Precios** de los planes (mensual / anual / de por vida) y **prueba gratis**.
-3. **Verificación de datos**: ¿usamos una fuente fija por animal (p. ej.
-   enciclopedia/zoo) para poblar `factSource`?
-4. **¿Cuántos animales/grupos** para el lanzamiento mínimo (MVP)?
-5. **iOS desde el inicio** o **Android primero** y iPhone después.
-6. **Idiomas**: ¿solo ES/EN al inicio o sumamos otro pronto?
+Resueltas en sesión (jun-2026). Las marcadas [PROPUESTA] son valores por defecto
+que puedes ajustar cuando quieras.
+
+1. **`appId`**: `com.animalitos.kids` [PROPUESTA — cambiar si defines marca/dominio].
+2. **Precios** (en `i18n.js → PLANS.price`) [PROPUESTA]:
+   - Mensual **US$2,99/mes** · Anual **US$19,99/año** · De por vida **US$39,99**.
+   - Prueba gratis: pendiente de definir (sugerido 7 días en el plan anual).
+3. **Verificación de datos**: fuente por animal = **Wikipedia de la especie**
+   (`sources.js`); todos los datos marcados **`verified: false`** hasta revisión
+   humana. La ficha muestra el enlace de fuente con la marca "dato por verificar".
+4. **MVP**: el catálogo actual (**8 grupos · 11 animales**) sirve como lanzamiento
+   mínimo. Ampliar grupos/animales es incremental.
+5. **Plataforma**: **Android primero** (Play, US$25 único) y **luego iPhone**
+   (App Store, US$99/año). Capacitor mantiene ambos listos desde un solo código.
+6. **Idiomas**: **ES/EN** al inicio. Sumar otro idioma = agregar la clave en
+   `data.js`/`i18n.js`.

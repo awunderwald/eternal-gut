@@ -37,6 +37,7 @@
     knowledgeLang: detectLang(),
     planId: "god", // el prototipo arranca en Modo Dios
     replays: { date: today(), used: {} },
+    favorites: [], // ids de animales guardados (local, sin cuenta)
   };
 
   let state = loadState();
@@ -78,6 +79,29 @@
   function findAnimal(catId, animalId) {
     const c = findCategory(catId);
     return c && c.animals.find((a) => a.id === animalId);
+  }
+  // Busca un animal (y su grupo) solo por su id — para la pantalla de favoritos.
+  function findAnimalById(animalId) {
+    for (const c of ANIMAL_DATA.categories) {
+      const a = c.animals.find((x) => x.id === animalId);
+      if (a) return { catId: c.id, animal: a };
+    }
+    return null;
+  }
+
+  // ---------- Favoritos (local, sin cuenta) ----------
+  function isFav(id) {
+    return state.favorites.includes(id);
+  }
+  function toggleFav(id) {
+    if (isFav(id)) state.favorites = state.favorites.filter((x) => x !== id);
+    else state.favorites.push(id);
+    saveState();
+  }
+  function updateFavButton() {
+    const btn = $("#btn-fav-toggle");
+    if (!btn) return;
+    btn.textContent = isFav(view.animalId) ? "❤️" : "🤍";
   }
 
   // ¿Está bloqueada esta categoría según el plan? (por índice o por ser premium)
@@ -184,9 +208,9 @@
   // ============ PANTALLA: DETALLE DEL ANIMAL ============
   const player = () => $("#player");
 
-  function openAnimal(catId, animalId) {
+  function openAnimal(catId, animalId, origin) {
     const animal = findAnimal(catId, animalId);
-    view = { screen: "animal", categoryId: catId, animalId, videoIndex: 0 };
+    view = { screen: "animal", categoryId: catId, animalId, videoIndex: 0, origin: origin || "category" };
 
     // Tinte temático suave según el grupo (sabana, océano, bosque…).
     $("#screen-animal").style.setProperty("--theme", CATEGORY_COLOR[catId] || "#7fb069");
@@ -200,6 +224,7 @@
     setupVideoDots(animal);
     loadVideo(animal, 0);
     renderFact(animal);
+    updateFavButton();
     showScreen("animal");
   }
 
@@ -333,6 +358,17 @@
     const canToggle = plan().languageToggle;
     toggle.style.display = canToggle ? "" : "none";
     toggle.innerHTML = `${FLAGS[state.knowledgeLang]} <span class="small">${LANG_NAME[state.knowledgeLang]}</span>`;
+
+    // Fuente del dato (Pacto §4). Marca "por verificar" si aún no está validado.
+    const src = (typeof ANIMAL_SOURCES !== "undefined" && ANIMAL_SOURCES[animal.id]) || null;
+    const link = $("#fact-source");
+    if (src && src.source) {
+      link.href = src.source;
+      link.textContent = "ⓘ " + t("source") + (src.verified ? "" : " · " + t("unverified"));
+      link.style.display = "";
+    } else {
+      link.style.display = "none";
+    }
   }
   function toggleKnowledgeLang() {
     if (!plan().languageToggle) return;
@@ -352,6 +388,45 @@
     $all(".screen").forEach((s) => s.classList.remove("active"));
     $("#screen-" + name).classList.add("active");
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // ============ PANTALLA: FAVORITOS ============
+  function renderFavorites() {
+    const grid = $("#favorites-grid");
+    grid.innerHTML = "";
+    $("#fav-empty").style.display = state.favorites.length ? "none" : "";
+    state.favorites.forEach((id) => {
+      const found = findAnimalById(id);
+      if (!found) return;
+      const { catId, animal } = found;
+      const card = document.createElement("button");
+      card.className = "card animal-card";
+      card.innerHTML = `
+        <img src="${animal.image}" alt="${animal.name[state.uiLang]}" loading="lazy" />
+        <span class="name-tag">${animal.name[state.uiLang]}</span>
+      `;
+      card.addEventListener("click", () => openAnimal(catId, animal.id, "favorites"));
+      grid.appendChild(card);
+    });
+  }
+
+  // ============ PANTALLA: CRÉDITOS ============
+  function renderCredits() {
+    const list = $("#credits-list");
+    if (list.children.length) return; // se construye una sola vez
+    if (typeof ATTRIBUTIONS === "undefined") return;
+    ATTRIBUTIONS.forEach((a) => {
+      const row = document.createElement("a");
+      row.className = "credit-row";
+      row.href = a.source;
+      row.target = "_blank";
+      row.rel = "noopener";
+      row.innerHTML = `
+        <span class="credit-file">${a.file}</span>
+        <span class="credit-meta">${a.author} · ${a.license}</span>
+      `;
+      list.appendChild(row);
+    });
   }
 
   // ============ Control parental + ajustes ============
@@ -403,6 +478,7 @@
           <span class="pname">${p.name[state.uiLang]}</span><br/>
           <span class="pdesc">${p.desc[state.uiLang]}</span>
         </span>
+        <span class="pprice">${p.price ? p.price[state.uiLang] : ""}</span>
         <span class="pcheck">✓</span>
       `;
       opt.addEventListener("click", () => {
@@ -441,8 +517,27 @@
     $("#btn-parents").addEventListener("click", openParentGate);
     $("#btn-back-home").addEventListener("click", () => showScreen("home"));
     $("#btn-back-cat").addEventListener("click", () => {
-      showScreen("category");
+      showScreen(view.origin === "favorites" ? "favorites" : "category");
     });
+
+    // Favoritos
+    $("#btn-favorites").addEventListener("click", () => {
+      renderFavorites();
+      showScreen("favorites");
+    });
+    $("#btn-back-fav").addEventListener("click", () => showScreen("home"));
+    $("#btn-fav-toggle").addEventListener("click", () => {
+      toggleFav(view.animalId);
+      updateFavButton();
+    });
+
+    // Créditos (desde la zona de adultos)
+    $("#btn-credits").addEventListener("click", () => {
+      closeModal();
+      renderCredits();
+      showScreen("credits");
+    });
+    $("#btn-back-credits").addEventListener("click", () => showScreen("home"));
 
     // Reproductor
     $("#big-play").addEventListener("click", togglePlay);
