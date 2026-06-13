@@ -36,6 +36,13 @@ function vid(transcodePath, originalPath) {
   return { src: `${T}/${transcodePath}`, fallback: `${C}/${originalPath}` };
 }
 
+// Video MP4 (H.264) de una URL absoluta — compatible con iPhone/Safari y Android.
+// Fuente premium en hábitat natural (Pexels, licencia libre). Para producción:
+// descargar y alojar el archivo en vez de enlazar al CDN.
+function mp4(url) {
+  return { src: url, fallback: url };
+}
+
 const ANIMAL_DATA = {
   categories: [
     // ============================ FELINOS ============================
@@ -56,18 +63,8 @@ const ANIMAL_DATA = {
           },
           videos: [
             {
-              title: { es: "El león descansa", en: "The lion rests" },
-              ...vid(
-                "5/5d/Lion_%28Panthera_leo%29.webm/Lion_%28Panthera_leo%29.webm.480p.vp9.webm",
-                "5/5d/Lion_%28Panthera_leo%29.webm"
-              ),
-            },
-            {
-              title: { es: "Leones en grupo", en: "Lions together" },
-              ...vid(
-                "7/72/Lions_%28Panthera_leo%29.webm/Lions_%28Panthera_leo%29.webm.480p.vp9.webm",
-                "7/72/Lions_%28Panthera_leo%29.webm"
-              ),
+              title: { es: "León en la sabana", en: "Lion in the savanna" },
+              ...mp4("https://videos.pexels.com/video-files/30393112/13025095_1080_1920_24fps.mp4"),
             },
           ],
         },
@@ -82,25 +79,8 @@ const ANIMAL_DATA = {
           },
           videos: [
             {
-              title: { es: "El tigre camina", en: "The tiger walks" },
-              ...vid(
-                "8/89/Walking_Tiger_in_Zoo.webm/Walking_Tiger_in_Zoo.webm.480p.vp9.webm",
-                "8/89/Walking_Tiger_in_Zoo.webm"
-              ),
-            },
-            {
-              title: { es: "El tigre habla", en: "The tiger calls" },
-              ...vid(
-                "4/42/Sumatran_tiger_%28Panthera_tigris_sumatrae%29_vocalising.webm/Sumatran_tiger_%28Panthera_tigris_sumatrae%29_vocalising.webm.480p.vp9.webm",
-                "4/42/Sumatran_tiger_%28Panthera_tigris_sumatrae%29_vocalising.webm"
-              ),
-            },
-            {
-              title: { es: "Tigre en el zoológico", en: "Tiger at the zoo" },
-              ...vid(
-                "d/dd/Malayan_tiger_%28Panthera_tigris_jacksoni%29_in_a_zoo.webm/Malayan_tiger_%28Panthera_tigris_jacksoni%29_in_a_zoo.webm.480p.vp9.webm",
-                "d/dd/Malayan_tiger_%28Panthera_tigris_jacksoni%29_in_a_zoo.webm"
-              ),
+              title: { es: "Tigre en la selva", en: "Tiger in the jungle" },
+              ...mp4("https://videos.pexels.com/video-files/31635739/13478216_1080_1920_24fps.mp4"),
             },
           ],
         },
@@ -225,11 +205,8 @@ const ANIMAL_DATA = {
           },
           videos: [
             {
-              title: { es: "Delfines nadando", en: "Dolphins swimming" },
-              ...vid(
-                "2/2d/053_Pod_of_Spinner_dolphins_swimming_in_the_Indian_ocean_Video_by_Giles_Laurent.webm/053_Pod_of_Spinner_dolphins_swimming_in_the_Indian_ocean_Video_by_Giles_Laurent.webm.480p.vp9.webm",
-                "2/2d/053_Pod_of_Spinner_dolphins_swimming_in_the_Indian_ocean_Video_by_Giles_Laurent.webm"
-              ),
+              title: { es: "Delfines en el mar", en: "Dolphins in the ocean" },
+              ...mp4("https://videos.pexels.com/video-files/28224356/12333240_1920_1080_30fps.mp4"),
             },
           ],
         },
@@ -273,11 +250,8 @@ const ANIMAL_DATA = {
           },
           videos: [
             {
-              title: { es: "El elefante se baña", en: "The elephant bathes" },
-              ...vid(
-                "7/79/Bathing_the_elephant.webm/Bathing_the_elephant.webm.480p.vp9.webm",
-                "7/79/Bathing_the_elephant.webm"
-              ),
+              title: { es: "Elefante en la sabana", en: "Elephant in the savanna" },
+              ...mp4("https://videos.pexels.com/video-files/31378767/13389721_1080_1920_30fps.mp4"),
             },
           ],
         },
@@ -292,11 +266,8 @@ const ANIMAL_DATA = {
           },
           videos: [
             {
-              title: { es: "La jirafa camina", en: "The giraffe walks" },
-              ...vid(
-                "8/89/Juvenile_Giraffe_-_walking_-_Malawi_-_2018_Aug.webm/Juvenile_Giraffe_-_walking_-_Malawi_-_2018_Aug.webm.480p.vp9.webm",
-                "8/89/Juvenile_Giraffe_-_walking_-_Malawi_-_2018_Aug.webm"
-              ),
+              title: { es: "Jirafa salvaje", en: "Giraffe in the wild" },
+              ...mp4("https://videos.pexels.com/video-files/5214219/5214219-hd_1920_1080_25fps.mp4"),
             },
           ],
         },

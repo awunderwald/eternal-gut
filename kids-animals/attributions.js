@@ -1,7 +1,6 @@
 /*
- * attributions.js — Créditos de medios (autogenerado desde Wikimedia Commons).
- * Todos los medios tienen licencia libre (Creative Commons o dominio público).
- * Para producción: mostrar esta pantalla y respetar cada licencia.
+ * attributions.js — Créditos de medios.
+ * Wikimedia Commons (CC/dominio público) + videos premium de Pexels (Pexels License).
  */
 const ATTRIBUTIONS = [
   {
@@ -267,5 +266,35 @@ const ATTRIBUTIONS = [
     "author": "Alvaro Ortiz Troncoso",
     "license": "CC BY-SA 4.0",
     "source": "https://commons.wikimedia.org/wiki/File:Strix_aluco_-_Tawny_Owl_XC563348.mp3"
+  },
+  {
+    "file": "León en la sabana — video (Pexels)",
+    "author": "Bharath Kumar Venkatesh",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/majestic-lion-strolling-in-african-savanna-30393112/"
+  },
+  {
+    "file": "Tigre en la selva — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/majestic-bengal-tiger-in-indian-jungle-31635739/"
+  },
+  {
+    "file": "Elefante en la sabana — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/majestic-elephant-walking-in-african-savanna-31378767/"
+  },
+  {
+    "file": "Jirafa salvaje — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/giraffe-in-the-wild-5214219/"
+  },
+  {
+    "file": "Delfines en el mar — video (Pexels)",
+    "author": "JIUN-JE LIN",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/a-group-of-dolphins-swimming-in-the-ocean-28224356/"
   }
 ];

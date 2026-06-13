@@ -36,8 +36,11 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
-  // Cache-first para TODO (cascarón + medios descargados de cualquier origen),
-  // así un grupo descargado funciona sin internet. Si no está en caché, red.
+  // Las peticiones de rango (streaming de video) van directo al navegador:
+  // el SW no debe entrometerse o el video puede no reproducir/saltar en iOS.
+  if (e.request.headers.has("range")) return;
+  // Cache-first para el resto (cascarón + medios descargados), así un grupo
+  // descargado funciona sin internet. Si no está en caché, va a la red.
   e.respondWith(
     caches.match(e.request, { ignoreVary: true }).then((cached) => cached || fetch(e.request))
   );
