@@ -25,10 +25,11 @@ python3 -m http.server 8080
 ## 🎛️ Qué incluye el prototipo
 
 - **Pantallas:** Inicio (grupos) → Animales → Detalle del animal.
-- **8 grupos:**
-  - 🐯 **Felinos** (grupo estrella, 4 animales): 🦁 León, 🐯 Tigre, 🐆 Guepardo, 🐱 Gato.
-  - 🐮 **Granja**: Vaca · 🐬 **Océano**: Delfín · 🐘 **Sabana**: Elefante ·
-    🦜 **Aves**: Guacamayo · 🐻 **Bosque**: Oso · 🐒 **Selva**: Mono (un animal por grupo).
+- **8 grupos · 15 animales:**
+  - 🐯 **Felinos** (4): 🦁 León, 🐯 Tigre, 🐆 Guepardo, 🐱 Gato.
+  - 🐮 **Granja**: Vaca, Caballo · 🐬 **Océano**: Delfín, Pingüino ·
+    🐘 **Sabana**: Elefante, Jirafa · 🦜 **Aves**: Guacamayo, Búho ·
+    🐻 **Bosque**: Oso · 🐒 **Selva**: Mono.
   - 🦖 **Dinosaurios** (grupo **premium**): el T-Rex se ve siempre, pero sin
     suscripción aparece con una cinta amable **"Bloqueado"** (letras blancas
     sobre rojo). Con Modo Dios / Anual / De por vida se desbloquea y se abre.

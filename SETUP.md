@@ -74,3 +74,18 @@ npx cap open ios         # abre Xcode
 - Suscripciones: plugin de in-app purchases (Play Billing / StoreKit) — evaluar
   RevenueCat para simplificar ambas tiendas.
 - Google Cast / AirPlay a TV.
+
+## 8. Íconos y splash (tienda)
+
+Las fuentes están en `assets/` (mascota 🦁 sobre crema):
+`icon-only.png`, `icon-foreground.png`, `icon-background.png`, `splash.png`, `splash-dark.png` (todas cuadradas, listas para el generador).
+
+Para crear todos los tamaños nativos (Android + iOS):
+
+```bash
+npm i -D @capacitor/assets
+npx capacitor-assets generate --iconBackgroundColor '#fdf6ec' --splashBackgroundColor '#fdf6ec'
+```
+
+Esto genera los íconos adaptativos y splash en los proyectos `android/` e `ios/`.
+El PWA ya usa el ícono del león en `kids-animals/icons/icon-512.png`.

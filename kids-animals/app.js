@@ -429,6 +429,51 @@
     });
   }
 
+  // ============ PANTALLA: PAYWALL (suscripción simulada) ============
+  function renderPaywall() {
+    const ben = $("#paywall-benefits");
+    ben.innerHTML = "";
+    ["paywallB1", "paywallB2", "paywallB3", "paywallB4"].forEach((k) => {
+      const li = document.createElement("li");
+      li.textContent = "✓ " + t(k);
+      ben.appendChild(li);
+    });
+    const wrap = $("#paywall-plans");
+    wrap.innerHTML = "";
+    ["monthly", "annual", "lifetime"].forEach((pid) => {
+      const p = PLANS[pid];
+      const card = document.createElement("button");
+      card.className = "paywall-plan" + (pid === "annual" ? " featured" : "");
+      card.innerHTML = `
+        <span class="pbadge">${p.badge}</span>
+        <span class="pinfo">
+          <span class="pname">${p.name[state.uiLang]}</span><br/>
+          <span class="pdesc">${p.desc[state.uiLang]}</span>
+        </span>
+        <span class="pprice">${p.price[state.uiLang]}</span>
+        <span class="choose">${t("choose")}</span>
+      `;
+      card.addEventListener("click", () => choosePlan(pid));
+      wrap.appendChild(card);
+    });
+  }
+  // Compra simulada: aplica el plan y vuelve al inicio con una confirmación tierna.
+  function choosePlan(pid) {
+    state.planId = pid;
+    saveState();
+    showToast(t("purchased"));
+    renderHome();
+    showScreen("home");
+  }
+  // Aviso breve y suave (toast).
+  function showToast(msg) {
+    const el = document.createElement("div");
+    el.className = "toast";
+    el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2400);
+  }
+
   // ============ Control parental + ajustes ============
   let gateAnswer = 0;
   function openParentGate() {
@@ -538,6 +583,15 @@
       showScreen("credits");
     });
     $("#btn-back-credits").addEventListener("click", () => showScreen("home"));
+
+    // Paywall (suscripción simulada, desde la zona de adultos)
+    $("#btn-paywall").addEventListener("click", () => {
+      closeModal();
+      renderPaywall();
+      showScreen("paywall");
+    });
+    $("#btn-back-paywall").addEventListener("click", () => showScreen("home"));
+    $("#btn-paywall-later").addEventListener("click", () => showScreen("home"));
 
     // Reproductor
     $("#big-play").addEventListener("click", togglePlay);

@@ -5,7 +5,7 @@
  * la red (son grandes y vienen de Wikimedia Commons).
  */
 
-const CACHE = "animalitos-shell-v2";
+const CACHE = "animalitos-shell-v3";
 const SHELL = [
   "./",
   "./index.html",
@@ -17,6 +17,7 @@ const SHELL = [
   "./app.js",
   "./manifest.webmanifest",
   "./icons/icon.svg",
+  "./icons/icon-512.png",
 ];
 
 self.addEventListener("install", (e) => {

@@ -24,6 +24,12 @@ function img(filename, width = 1024) {
   return `${FP}/${enc}?width=${width}`;
 }
 
+// Sonido/medio a partir del nombre de archivo (Commons resuelve la redirección).
+function snd(filename) {
+  const enc = encodeURIComponent(filename).replace(/\(/g, "%28").replace(/\)/g, "%29");
+  return `${FP}/${enc}`;
+}
+
 // Video: { src: transcode 480p, fallback: original }. La app usa el respaldo
 // automáticamente si la versión liviana falla.
 function vid(transcodePath, originalPath) {
@@ -179,6 +185,25 @@ const ANIMAL_DATA = {
             },
           ],
         },
+        {
+          id: "caballo",
+          name: { es: "Caballo", en: "Horse" },
+          image: img("White horse portrait.jpg"),
+          sound: { src: snd("Wiehern.ogg") },
+          facts: {
+            es: "El caballo es fuerte y veloz, y puede dormir de pie. Hace miles de años ayuda a las personas a viajar y trabajar. Cuando saluda relincha: '¡iiih!'.",
+            en: "The horse is strong and fast, and can sleep standing up. For thousands of years it has helped people travel and work. When it greets you it neighs!",
+          },
+          videos: [
+            {
+              title: { es: "El caballo corre", en: "The horse runs" },
+              ...vid(
+                "a/af/Horses_running_in_a_pasture.webm/Horses_running_in_a_pasture.webm.480p.vp9.webm",
+                "a/af/Horses_running_in_a_pasture.webm"
+              ),
+            },
+          ],
+        },
       ],
     },
 
@@ -204,6 +229,25 @@ const ANIMAL_DATA = {
               ...vid(
                 "2/2d/053_Pod_of_Spinner_dolphins_swimming_in_the_Indian_ocean_Video_by_Giles_Laurent.webm/053_Pod_of_Spinner_dolphins_swimming_in_the_Indian_ocean_Video_by_Giles_Laurent.webm.480p.vp9.webm",
                 "2/2d/053_Pod_of_Spinner_dolphins_swimming_in_the_Indian_ocean_Video_by_Giles_Laurent.webm"
+              ),
+            },
+          ],
+        },
+        {
+          id: "pinguino",
+          name: { es: "Pingüino", en: "Penguin" },
+          image: img("Spheniscus demersus (portrait).jpg"),
+          sound: { src: snd("20091121 Little Penguin calls at St Kilda Breakwater.ogg") },
+          facts: {
+            es: "El pingüino es un ave que no vuela, pero ¡nada como un campeón! Vive donde hace frío y se desliza sobre su pancita en el hielo. Cuida a sus bebés en grupo.",
+            en: "The penguin is a bird that can't fly, but swims like a champion! It lives where it's cold and slides on its belly over the ice. It cares for its babies in a group.",
+          },
+          videos: [
+            {
+              title: { es: "Pingüinos caminando", en: "Penguins walking" },
+              ...vid(
+                "e/ec/African_penguins_walking.webm/African_penguins_walking.webm.480p.vp9.webm",
+                "e/ec/African_penguins_walking.webm"
               ),
             },
           ],
@@ -237,6 +281,25 @@ const ANIMAL_DATA = {
             },
           ],
         },
+        {
+          id: "jirafa",
+          name: { es: "Jirafa", en: "Giraffe" },
+          image: img("006 Giraffe portrait in the Lake Manyara National Park Photo by Giles Laurent.jpg"),
+          sound: null,
+          facts: {
+            es: "La jirafa es el animal más alto del mundo. Su cuello larguísimo le ayuda a comer hojas de los árboles altos. ¡Su lengua es azul y muy larga!",
+            en: "The giraffe is the tallest animal in the world. Its very long neck helps it eat leaves from tall trees. Its tongue is blue and very long!",
+          },
+          videos: [
+            {
+              title: { es: "La jirafa camina", en: "The giraffe walks" },
+              ...vid(
+                "8/89/Juvenile_Giraffe_-_walking_-_Malawi_-_2018_Aug.webm/Juvenile_Giraffe_-_walking_-_Malawi_-_2018_Aug.webm.480p.vp9.webm",
+                "8/89/Juvenile_Giraffe_-_walking_-_Malawi_-_2018_Aug.webm"
+              ),
+            },
+          ],
+        },
       ],
     },
 
@@ -262,6 +325,25 @@ const ANIMAL_DATA = {
               ...vid(
                 "6/60/Ara_macao_01.ogv/Ara_macao_01.ogv.480p.vp9.webm",
                 "6/60/Ara_macao_01.ogv"
+              ),
+            },
+          ],
+        },
+        {
+          id: "buho",
+          name: { es: "Búho", en: "Owl" },
+          image: img("Burrowing Owl Portrait (6777953881).jpg"),
+          sound: { src: snd("Strix aluco - Tawny Owl XC563348.mp3") },
+          facts: {
+            es: "El búho puede girar su cabeza casi por completo para mirar atrás. Ve muy bien de noche y vuela en silencio. Dice 'uh-uh' cuando llama.",
+            en: "The owl can turn its head almost all the way around to look behind. It sees very well at night and flies silently. It says 'hoo-hoo' when it calls.",
+          },
+          videos: [
+            {
+              title: { es: "El búho", en: "The owl" },
+              ...vid(
+                "c/c1/Little_Owl%2CSouth_Hebron.webm/Little_Owl%2CSouth_Hebron.webm.480p.vp9.webm",
+                "c/c1/Little_Owl%2CSouth_Hebron.webm"
               ),
             },
           ],

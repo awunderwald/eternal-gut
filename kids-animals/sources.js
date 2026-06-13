@@ -18,5 +18,9 @@ const ANIMAL_SOURCES = {
   guacamayo: { source: "https://es.wikipedia.org/wiki/Ara_macao",               verified: false },
   oso:       { source: "https://es.wikipedia.org/wiki/Ursus_arctos",            verified: false },
   mono:      { source: "https://es.wikipedia.org/wiki/Macaca_mulatta",          verified: false },
+  caballo:   { source: "https://es.wikipedia.org/wiki/Equus_ferus_caballus",    verified: false },
+  pinguino:  { source: "https://es.wikipedia.org/wiki/Spheniscidae",            verified: false },
+  jirafa:    { source: "https://es.wikipedia.org/wiki/Giraffa",                 verified: false },
+  buho:      { source: "https://es.wikipedia.org/wiki/Strigidae",               verified: false },
   trex:      { source: "https://es.wikipedia.org/wiki/Tyrannosaurus_rex",       verified: false },
 };

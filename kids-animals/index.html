@@ -9,7 +9,7 @@
   <title>Animalitos · Conoce el reino animal</title>
   <meta name="description" content="App suave y gentil para que los niños pequeños conozcan a los animales: foto, video, sonido y un dato para que los papás lean." />
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-512.png" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -101,6 +101,19 @@
       <div id="credits-list" class="credits-list"></div>
     </section>
 
+    <!-- ============ PANTALLA: PAYWALL (suscripción simulada) ============ -->
+    <section id="screen-paywall" class="screen">
+      <div class="topbar">
+        <button id="btn-back-paywall" class="round-btn" aria-label="Volver">⬅️</button>
+        <h2 data-i18n="paywallTitle">Desbloquea todo</h2>
+      </div>
+      <p class="hint" data-i18n="paywallSubtitle"></p>
+      <ul id="paywall-benefits" class="paywall-benefits"></ul>
+      <div id="paywall-plans" class="paywall-plans"></div>
+      <button id="btn-paywall-later" class="pill-btn" style="width:100%;justify-content:center;margin-top:14px;" data-i18n="maybeLater">Quizás luego</button>
+      <p class="modal-note" style="text-align:center;" data-i18n="paywallFine"></p>
+    </section>
+
   </div>
 
   <!-- ============ MODAL: zona de adultos (gate + ajustes) ============ -->
@@ -133,7 +146,8 @@
         <div id="plan-list" class="plan-list"></div>
         <p class="modal-note" data-i18n="planNote"></p>
 
-        <button id="btn-credits" class="pill-btn" style="width:100%;justify-content:center;margin-top:18px;" data-i18n="creditsBtn">🎬 Créditos de medios</button>
+        <button id="btn-paywall" class="pill-btn primary" style="width:100%;justify-content:center;margin-top:18px;" data-i18n="paywallBtn">✨ Suscríbete</button>
+        <button id="btn-credits" class="pill-btn" style="width:100%;justify-content:center;margin-top:10px;" data-i18n="creditsBtn">🎬 Créditos de medios</button>
 
         <div class="modal-actions">
           <button id="settings-close" class="pill-btn primary" data-i18n="close">Cerrar</button>

@@ -893,3 +893,97 @@ body::after {
   font-weight: 600;
   color: var(--ink-soft);
 }
+
+/* ---------- Paywall (suscripción simulada) ---------- */
+.paywall-benefits {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 4px 0 18px;
+}
+.paywall-benefits li {
+  background: linear-gradient(165deg, #fffdf9, #f3f8ee);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm), var(--ring-light);
+  padding: 12px 16px;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1rem;
+}
+.paywall-plans {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.paywall-plan {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: none;
+  background: linear-gradient(160deg, #ffffff, #f7ecdb);
+  box-shadow: var(--shadow), var(--ring-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: transform 0.3s var(--spring), box-shadow 0.3s var(--ease);
+}
+.paywall-plan:active {
+  transform: scale(0.98);
+}
+.paywall-plan.featured {
+  box-shadow: var(--shadow-lg), inset 0 0 0 2.5px var(--sun-deep);
+}
+.paywall-plan .pbadge {
+  font-size: 1.9rem;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #fbe8cf);
+  box-shadow: var(--shadow-sm);
+}
+.paywall-plan .pinfo { flex: 1; }
+.paywall-plan .pname { font-size: 1.18rem; font-weight: 800; color: var(--ink); }
+.paywall-plan .pdesc { font-size: 0.86rem; font-weight: 600; color: var(--ink-soft); }
+.paywall-plan .pprice {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--leaf-dark);
+  white-space: nowrap;
+}
+.paywall-plan .choose {
+  background: linear-gradient(160deg, #93c47d, var(--leaf-dark));
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 9px 16px;
+  border-radius: 22px;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+/* Toast (aviso breve y suave) */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(28px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  background: linear-gradient(160deg, #5c8a4a, #4a7a3c);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.02rem;
+  padding: 14px 22px;
+  border-radius: 26px;
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  animation: toastIn 0.4s var(--spring), toastOut 0.5s var(--ease) 1.9s forwards;
+}
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes toastOut { to { opacity: 0; transform: translate(-50%, 16px); } }
