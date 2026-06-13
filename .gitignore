@@ -14,3 +14,6 @@ npm-debug.log*
 # Editores
 .vscode/
 .idea/
+
+# Lock file (se regenera limpio al instalar localmente; ahora trae puppeteer de las capturas)
+package-lock.json
