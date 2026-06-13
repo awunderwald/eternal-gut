@@ -244,9 +244,9 @@ body::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 26px 14px;
+  padding: 24px 14px 46px;
   gap: 12px;
-  min-height: 158px;
+  min-height: 172px;
   text-align: center;
 }
 .category-card::before {
@@ -301,16 +301,14 @@ body::after {
   z-index: 3;
 }
 
-/* Bloqueado: el animalito SIGUE en colores (tierno); solo cinta amable abajo. */
-.category-card.locked {
-  padding-bottom: 50px;
-}
+/* Bloqueado: el animalito SIGUE en colores (tierno); el espacio para la cinta
+   ya está reservado en .category-card, así todas las tarjetas miden igual. */
 .lock-band {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #f37b7b 0%, #e23b3b 100%);
+  background: linear-gradient(135deg, #f0978f 0%, #e07b73 100%);
   color: #ffffff;
   font-size: 0.95rem;
   font-weight: 800;
@@ -388,11 +386,11 @@ body::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, rgba(45, 38, 30, 0.86), rgba(45, 38, 30, 0.2) 70%, transparent);
+  background: linear-gradient(to top, rgba(45, 38, 30, 0.88), rgba(45, 38, 30, 0.25) 72%, transparent);
   color: var(--white);
-  font-size: 1.4rem;
+  font-size: 1.55rem;
   font-weight: 800;
-  padding: 30px 14px 16px;
+  padding: 32px 14px 16px;
   text-align: center;
   letter-spacing: -0.2px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
