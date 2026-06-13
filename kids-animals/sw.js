@@ -35,10 +35,10 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-  const url = new URL(e.request.url);
-  // Solo gestionamos archivos del mismo origen (el cascarón).
-  if (url.origin !== self.location.origin) return;
+  if (e.request.method !== "GET") return;
+  // Cache-first para TODO (cascarón + medios descargados de cualquier origen),
+  // así un grupo descargado funciona sin internet. Si no está en caché, red.
   e.respondWith(
-    caches.match(e.request).then((cached) => cached || fetch(e.request))
+    caches.match(e.request, { ignoreVary: true }).then((cached) => cached || fetch(e.request))
   );
 });

@@ -38,7 +38,10 @@
     planId: "god", // el prototipo arranca en Modo Dios
     replays: { date: today(), used: {} },
     favorites: [], // ids de animales guardados (local, sin cuenta)
+    downloaded: [], // ids de grupos descargados para ver sin internet
   };
+
+  const MEDIA_CACHE = "animalitos-media-v1";
 
   let state = loadState();
 
@@ -202,7 +205,56 @@
       });
       grid.appendChild(card);
     });
+    updateDownloadBtn(catId);
     showScreen("category");
+  }
+
+  // ---------- Descargas offline (F3): cachea los medios del grupo ----------
+  function groupMediaUrls(cat) {
+    const urls = [];
+    cat.animals.forEach((a) => {
+      if (a.image) urls.push(a.image);
+      if (a.sound) urls.push(a.sound.src);
+      a.videos.forEach((v) => urls.push(v.src));
+    });
+    return urls;
+  }
+  function updateDownloadBtn(catId) {
+    const btn = $("#btn-download");
+    if (!("caches" in window)) {
+      btn.style.display = "none";
+      return;
+    }
+    btn.style.display = "";
+    btn.disabled = false;
+    if (state.downloaded.includes(catId)) {
+      btn.classList.add("sound");
+      btn.textContent = t("downloaded");
+    } else {
+      btn.classList.remove("sound");
+      btn.textContent = t("download");
+    }
+  }
+  async function downloadGroup(catId) {
+    const cat = findCategory(catId);
+    if (!cat || !("caches" in window) || state.downloaded.includes(catId)) return;
+    const btn = $("#btn-download");
+    btn.disabled = true;
+    btn.textContent = t("downloading");
+    try {
+      const cache = await caches.open(MEDIA_CACHE);
+      const urls = groupMediaUrls(cat);
+      // Wikimedia permite CORS; cacheamos solo respuestas correctas (no 429/errores).
+      await Promise.allSettled(
+        urls.map((u) => fetch(u).then((r) => (r.ok ? cache.put(u, r.clone()) : null)))
+      );
+      if (!state.downloaded.includes(catId)) state.downloaded.push(catId);
+      saveState();
+      showToast(t("downloadDone"));
+    } catch (e) {
+      /* sin conexión o error: el botón vuelve a su estado */
+    }
+    updateDownloadBtn(catId);
   }
 
   // ============ PANTALLA: DETALLE DEL ANIMAL ============
@@ -564,6 +616,7 @@
     $("#btn-back-cat").addEventListener("click", () => {
       showScreen(view.origin === "favorites" ? "favorites" : "category");
     });
+    $("#btn-download").addEventListener("click", () => downloadGroup(view.categoryId));
 
     // Favoritos
     $("#btn-favorites").addEventListener("click", () => {

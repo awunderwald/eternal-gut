@@ -58,6 +58,10 @@ const I18N = {
     maybeLater: "Quizás luego",
     paywallFine: "Compra simulada (prototipo) · la gestiona un adulto",
     purchased: "¡Listo! Plan activado 🎉",
+    download: "⬇️ Descargar grupo",
+    downloading: "Descargando…",
+    downloaded: "Descargado ✓ (sin internet)",
+    downloadDone: "¡Listo para ver sin internet! 📲",
   },
   en: {
     appName: "Little Animals",
@@ -110,6 +114,10 @@ const I18N = {
     maybeLater: "Maybe later",
     paywallFine: "Simulated purchase (prototype) · managed by a grown-up",
     purchased: "Done! Plan activated 🎉",
+    download: "⬇️ Download group",
+    downloading: "Downloading…",
+    downloaded: "Downloaded ✓ (offline)",
+    downloadDone: "Ready to watch offline! 📲",
   },
 };
 

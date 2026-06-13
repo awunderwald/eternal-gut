@@ -37,6 +37,9 @@ python3 -m http.server 8080
   además su **sonido característico** (tigre, gato, vaca, elefante, oso, mono).
 - **Reproductor gentil:** botón grande de play, **pausa**, **"ver de nuevo"** y
   selector de videos (1, 2, 3…). Sin reproducción automática ni sonidos bruscos.
+- **Descarga offline:** botón **⬇️ Descargar grupo** que cachea sus medios para
+  verlos **sin internet** (service worker cache-first).
+- **Favoritos** (corazón, local) · **Créditos** de medios · **Paywall** simulado.
 - **Dos idiomas independientes:**
   - *Idioma de la app* (todo el texto de botones/títulos). Se detecta solo según
     el país/idioma del teléfono; por defecto **español**.
