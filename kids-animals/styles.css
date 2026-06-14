@@ -987,3 +987,12 @@ body::after {
 }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @keyframes toastOut { to { opacity: 0; transform: translate(-50%, 16px); } }
+
+/* Botones de sonido del animal (se reproducen aparte del video) */
+.sound-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 6px 0 2px;
+}

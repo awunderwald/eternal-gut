@@ -270,8 +270,7 @@
     $("#animal-topname").textContent = "";
     $("#animal-name").textContent = animal.name[state.knowledgeLang];
 
-    // Botón de sonido solo si hay clip dedicado
-    $("#btn-sound").style.display = animal.sound ? "" : "none";
+    renderSoundButtons(animal);
 
     setupVideoDots(animal);
     loadVideo(animal, 0);
@@ -328,8 +327,7 @@
     showBigPlay(true);
     setPlayLabel(false);
     setNote("");
-    stopSound();
-    pl.muted = false;
+    pl.muted = true; // el video siempre silencioso (el sonido va por separado)
   }
 
   // ---------- Reproductor: play / pausa / repetir ----------
@@ -343,18 +341,9 @@
   }
 
   function play() {
-    const pl = player();
-    const animal = currentAnimal();
-    // El VIDEO 1 (índice 0) emite el sonido característico del animal: silenciamos
-    // el audio del clip y reproducimos su sonido real (si es compatible con iPhone).
-    if (view.videoIndex === 0 && animal && animal.sound && isCompatibleSound(animal.sound.src)) {
-      pl.muted = true;
-      playSoundOnly(animal);
-    } else {
-      pl.muted = false;
-      stopSound();
-    }
-    pl.play();
+    // El video va SIEMPRE silencioso; el sonido del animal se reproduce aparte,
+    // con los botones de sonido (independiente del video).
+    player().play();
   }
   function togglePlay() {
     const pl = player();
@@ -396,24 +385,30 @@
     $("#player-note").textContent = text || "";
   }
 
-  // ---------- Sonido característico (clip separado) ----------
+  // ---------- Sonidos del animal (clips separados, varios por animal) ----------
   let soundAudio = null;
-  // ¿El formato suena en iPhone/Safari? (mp3/wav/m4a/aac sí; ogg/oga no)
-  function isCompatibleSound(src) {
-    return /\.(mp3|wav|m4a|aac)$/i.test(src);
+  // Lista de sonidos del animal: soporta `sounds: [...]` o el viejo `sound: {...}`.
+  function getSounds(animal) {
+    if (animal && Array.isArray(animal.sounds)) return animal.sounds;
+    if (animal && animal.sound) return [{ name: { es: "Sonido", en: "Sound" }, src: animal.sound.src }];
+    return [];
   }
-  // Reproduce el sonido SIN pausar el video (para acompañar al video 1).
-  function playSoundOnly(animal) {
-    stopSound();
-    soundAudio = new Audio(animal.sound.src);
-    soundAudio.play().catch(() => {});
+  // Dibuja un botón por cada sonido del animal (se tocan aparte del video).
+  function renderSoundButtons(animal) {
+    const wrap = $("#sound-buttons");
+    wrap.innerHTML = "";
+    getSounds(animal).forEach((s) => {
+      const b = document.createElement("button");
+      b.className = "pill-btn sound";
+      const label = (s.name && (s.name[state.uiLang] || s.name.es)) || t("sound");
+      b.innerHTML = `🔊 ${label}`;
+      b.addEventListener("click", () => playSrc(s.src));
+      wrap.appendChild(b);
+    });
   }
-  function playSound() {
-    const animal = currentAnimal();
-    if (!animal || !animal.sound) return;
-    player().pause();
+  function playSrc(src) {
     stopSound();
-    soundAudio = new Audio(animal.sound.src);
+    soundAudio = new Audio(src);
     soundAudio.play().catch(() => {});
   }
   function stopSound() {
@@ -672,7 +667,6 @@
     $("#big-play").addEventListener("click", togglePlay);
     $("#btn-playpause").addEventListener("click", togglePlay);
     $("#btn-replay").addEventListener("click", doReplay);
-    $("#btn-sound").addEventListener("click", playSound);
     $("#flag-toggle").addEventListener("click", toggleKnowledgeLang);
 
     const pl = player();

@@ -56,7 +56,11 @@ const ANIMAL_DATA = {
           id: "leon",
           name: { es: "León", en: "Lion" },
           image: img("Lion waiting in Namibia.jpg"),
-          sound: { src: "sounds/leon.mp3" },
+          // Varios sonidos por animal (se reproducen aparte del video, con botones).
+          sounds: [
+            { name: { es: "Rugido", en: "Roar" }, src: "sounds/leon.mp3" },
+            { name: { es: "Ronroneo", en: "Purr" }, src: "sounds/leon-ronroneo.mp3" },
+          ],
           facts: {
             es: "El león vive en África. Vive en familias llamadas manadas. Su rugido se escucha hasta 8 kilómetros de distancia. Come carne y puede pesar como 190 kilos, ¡igual que tres niños grandes juntos!",
             en: "The lion lives in Africa. It lives in families called prides. Its roar can be heard up to 8 kilometers away. It eats meat and can weigh about 190 kilograms — as much as three big kids together!",
@@ -72,7 +76,9 @@ const ANIMAL_DATA = {
           id: "tigre",
           name: { es: "Tigre", en: "Tiger" },
           image: img("Siberian Tiger sf.jpg"),
-          sound: { src: `${C}/2/29/439280_schots_angry-tiger.wav` },
+          sounds: [
+            { name: { es: "Gruñido", en: "Growl" }, src: `${C}/2/29/439280_schots_angry-tiger.wav` },
+          ],
           facts: {
             es: "El tigre es el felino más grande del mundo. ¡Le encanta nadar! Sus rayas son únicas, como nuestras huellas digitales: no hay dos tigres iguales. Puede medir 3 metros de largo.",
             en: "The tiger is the largest cat in the world. It loves to swim! Its stripes are unique, like our fingerprints — no two tigers are the same. It can be 3 meters long.",
