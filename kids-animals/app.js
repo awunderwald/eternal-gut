@@ -215,7 +215,7 @@
     cat.animals.forEach((a) => {
       if (a.image) urls.push(a.image);
       if (a.sound) urls.push(a.sound.src);
-      a.videos.forEach((v) => urls.push(v.src));
+      getVideos(a).forEach((v) => urls.push(v.src));
     });
     return urls;
   }
@@ -283,11 +283,18 @@
     return findAnimal(view.categoryId, view.animalId);
   }
 
+  // Videos del animal: ANIMAL_VIDEOS (MP4 iPhone) tiene prioridad sobre data.js.
+  function getVideos(animal) {
+    if (animal && typeof ANIMAL_VIDEOS !== "undefined" && ANIMAL_VIDEOS[animal.id]) return ANIMAL_VIDEOS[animal.id];
+    return (animal && animal.videos) || [];
+  }
+
   function setupVideoDots(animal) {
     const wrap = $("#video-dots");
     wrap.innerHTML = "";
-    if (animal.videos.length <= 1) return; // un solo video: no mostramos selector
-    animal.videos.forEach((v, i) => {
+    const vids = getVideos(animal);
+    if (vids.length <= 1) return; // un solo video: no mostramos selector
+    vids.forEach((v, i) => {
       const locked = videoLocked(i);
       const dot = document.createElement("button");
       dot.className = "video-dot" + (i === view.videoIndex ? " active" : "") + (locked ? " locked" : "");
@@ -312,7 +319,7 @@
 
   function loadVideo(animal, index) {
     view.videoIndex = index;
-    const v = animal.videos[index];
+    const v = getVideos(animal)[index];
     const pl = player();
     pl.poster = animal.image;
     pl.src = v.src;

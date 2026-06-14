@@ -368,5 +368,65 @@ const ATTRIBUTIONS = [
     "author": "rebecca.valdez3",
     "license": "CC BY 3.0",
     "source": "https://freesound.org/s/393354/"
+  },
+  {
+    "file": "Guepardo — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/34833591/"
+  },
+  {
+    "file": "Gato — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/3926874/"
+  },
+  {
+    "file": "Vaca — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/32044008/"
+  },
+  {
+    "file": "Caballo — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/28899321/"
+  },
+  {
+    "file": "Pingüino — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/13458445/"
+  },
+  {
+    "file": "Oso — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/855113/"
+  },
+  {
+    "file": "Mono — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/31398496/"
+  },
+  {
+    "file": "Guacamayo — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/30049204/"
+  },
+  {
+    "file": "Búho — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/33404877/"
+  },
+  {
+    "file": "T-Rex — video (Pexels)",
+    "author": "Pexels",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/34492572/"
   }
 ];
