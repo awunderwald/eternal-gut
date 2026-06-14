@@ -1,6 +1,6 @@
 /*
  * attributions.js — Créditos de medios.
- * Wikimedia Commons (CC/dominio público) + videos premium de Pexels (Pexels License).
+ * Wikimedia Commons (CC) + videos Pexels (Pexels License) + sonidos Freesound (CC0/CC BY) y Mixkit.
  */
 const ATTRIBUTIONS = [
   {
@@ -296,5 +296,71 @@ const ATTRIBUTIONS = [
     "author": "JIUN-JE LIN",
     "license": "Pexels License",
     "source": "https://www.pexels.com/video/a-group-of-dolphins-swimming-in-the-ocean-28224356/"
+  },
+  {
+    "file": "Gato — sonido (Freesound)",
+    "author": "Lukey1028",
+    "license": "CC0",
+    "source": "https://freesound.org/s/732519/"
+  },
+  {
+    "file": "Vaca — sonido (Freesound)",
+    "author": "spurioustransients",
+    "license": "CC0",
+    "source": "https://freesound.org/s/513557/"
+  },
+  {
+    "file": "Caballo — sonido (Freesound)",
+    "author": "TheKingOfGeeks360",
+    "license": "CC0",
+    "source": "https://freesound.org/s/777763/"
+  },
+  {
+    "file": "Pingüino — sonido (Freesound)",
+    "author": "hackerb9",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/110116/"
+  },
+  {
+    "file": "Elefante — sonido (Freesound)",
+    "author": "vintprox",
+    "license": "CC0",
+    "source": "https://freesound.org/s/854137/"
+  },
+  {
+    "file": "Guacamayo — sonido (Freesound)",
+    "author": "Breviceps",
+    "license": "CC0",
+    "source": "https://freesound.org/s/535815/"
+  },
+  {
+    "file": "Oso — sonido (Freesound)",
+    "author": "Piddipop",
+    "license": "CC0",
+    "source": "https://freesound.org/s/728102/"
+  },
+  {
+    "file": "Mono — sonido (Freesound)",
+    "author": "soundbytez",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/99453/"
+  },
+  {
+    "file": "T-Rex — sonido (Freesound)",
+    "author": "Logicogonist",
+    "license": "CC0",
+    "source": "https://freesound.org/s/810951/"
+  },
+  {
+    "file": "Guepardo — sonido (Freesound)",
+    "author": "BalancedEnergy10",
+    "license": "CC0",
+    "source": "https://freesound.org/s/265541/"
+  },
+  {
+    "file": "Delfín — sonido (Freesound)",
+    "author": "Mastersoundboy2005",
+    "license": "CC0",
+    "source": "https://freesound.org/s/737276/"
   }
 ];

@@ -389,8 +389,10 @@
   let soundAudio = null;
   // Lista de sonidos del animal: soporta `sounds: [...]` o el viejo `sound: {...}`.
   function getSounds(animal) {
-    if (animal && Array.isArray(animal.sounds)) return animal.sounds;
-    if (animal && animal.sound) return [{ name: { es: "Sonido", en: "Sound" }, src: animal.sound.src }];
+    if (!animal) return [];
+    if (typeof ANIMAL_SOUNDS !== "undefined" && ANIMAL_SOUNDS[animal.id]) return ANIMAL_SOUNDS[animal.id];
+    if (Array.isArray(animal.sounds)) return animal.sounds;
+    if (animal.sound) return [{ name: { es: "Sonido", en: "Sound" }, src: animal.sound.src }];
     return [];
   }
   // Dibuja un botón por cada sonido del animal (se tocan aparte del video).

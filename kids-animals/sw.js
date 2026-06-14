@@ -5,7 +5,7 @@
  * la red (son grandes y vienen de Wikimedia Commons).
  */
 
-const CACHE = "animalitos-shell-v3";
+const CACHE = "animalitos-shell-v4";
 const SHELL = [
   "./",
   "./index.html",
@@ -13,6 +13,7 @@ const SHELL = [
   "./data.js",
   "./i18n.js",
   "./sources.js",
+  "./sounds.js",
   "./attributions.js",
   "./app.js",
   "./manifest.webmanifest",
