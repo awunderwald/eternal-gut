@@ -28,6 +28,6 @@ const ANIMAL_SOUNDS = {
   oso: [{ name: { es: "Gruñido", en: "Growl" }, src: "sounds/oso.mp3" }],
   mono: [{ name: { es: "Llamado", en: "Call" }, src: "sounds/mono.mp3" }],
   trex: [{ name: { es: "Rugido", en: "Roar" }, src: "sounds/trex.mp3" }],
+  jirafa: [{ name: { es: "Sonido", en: "Sound" }, src: "sounds/jirafa.mp3" }],
   // buho: usa su sonido existente (Strix aluco .mp3) vía data.js.
-  // jirafa: sin sonido (las jirafas son casi mudas).
 };

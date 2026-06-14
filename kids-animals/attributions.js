@@ -362,5 +362,11 @@ const ATTRIBUTIONS = [
     "author": "Mastersoundboy2005",
     "license": "CC0",
     "source": "https://freesound.org/s/737276/"
+  },
+  {
+    "file": "Jirafa — sonido (Freesound)",
+    "author": "rebecca.valdez3",
+    "license": "CC BY 3.0",
+    "source": "https://freesound.org/s/393354/"
   }
 ];
