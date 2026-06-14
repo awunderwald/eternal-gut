@@ -436,15 +436,15 @@ body::after {
   overflow: hidden;
   box-shadow: var(--shadow-lg),
     0 0 0 4px color-mix(in srgb, var(--theme) 22%, transparent), var(--ring-light);
-  background: #1a1612;
+  background: color-mix(in srgb, var(--theme) 16%, #fbf3e6);
 }
 .detail-hero img,
 .detail-hero video {
   width: 100%;
   display: block;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background: #1a1612;
+  aspect-ratio: 1 / 1;
+  object-fit: contain; /* muestra el animal COMPLETO (sin recortar), sea vertical u horizontal */
+  background: transparent;
 }
 .detail-hero .big-play {
   position: absolute;
