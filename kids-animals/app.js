@@ -328,9 +328,11 @@
     showBigPlay(true);
     setPlayLabel(false);
     setNote("");
+    stopSound();
+    pl.muted = false;
   }
 
-  // ---------- Reproductor: play / pause / repetir ----------
+  // ---------- Reproductor: play / pausa / repetir ----------
   function showBigPlay(show) {
     $("#big-play").classList.toggle("hidden", !show);
   }
@@ -341,8 +343,18 @@
   }
 
   function play() {
-    stopSound();
-    player().play();
+    const pl = player();
+    const animal = currentAnimal();
+    // El VIDEO 1 (índice 0) emite el sonido característico del animal: silenciamos
+    // el audio del clip y reproducimos su sonido real (si es compatible con iPhone).
+    if (view.videoIndex === 0 && animal && animal.sound && isCompatibleSound(animal.sound.src)) {
+      pl.muted = true;
+      playSoundOnly(animal);
+    } else {
+      pl.muted = false;
+      stopSound();
+    }
+    pl.play();
   }
   function togglePlay() {
     const pl = player();
@@ -386,6 +398,16 @@
 
   // ---------- Sonido característico (clip separado) ----------
   let soundAudio = null;
+  // ¿El formato suena en iPhone/Safari? (mp3/wav/m4a/aac sí; ogg/oga no)
+  function isCompatibleSound(src) {
+    return /\.(mp3|wav|m4a|aac)$/i.test(src);
+  }
+  // Reproduce el sonido SIN pausar el video (para acompañar al video 1).
+  function playSoundOnly(animal) {
+    stopSound();
+    soundAudio = new Audio(animal.sound.src);
+    soundAudio.play().catch(() => {});
+  }
   function playSound() {
     const animal = currentAnimal();
     if (!animal || !animal.sound) return;

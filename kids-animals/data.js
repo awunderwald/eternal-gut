@@ -56,7 +56,7 @@ const ANIMAL_DATA = {
           id: "leon",
           name: { es: "León", en: "Lion" },
           image: img("Lion waiting in Namibia.jpg"),
-          sound: null,
+          sound: { src: "sounds/leon.mp3" },
           facts: {
             es: "El león vive en África. Vive en familias llamadas manadas. Su rugido se escucha hasta 8 kilómetros de distancia. Come carne y puede pesar como 190 kilos, ¡igual que tres niños grandes juntos!",
             en: "The lion lives in Africa. It lives in families called prides. Its roar can be heard up to 8 kilometers away. It eats meat and can weigh about 190 kilograms — as much as three big kids together!",
