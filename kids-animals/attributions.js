@@ -1,7 +1,4 @@
-/*
- * attributions.js — Créditos de medios.
- * Wikimedia Commons (CC) + videos Pexels (Pexels License) + sonidos Freesound (CC0/CC BY) y Mixkit.
- */
+/* attributions.js — Créditos de medios (Wikimedia/Pexels/Freesound/Mixkit). */
 const ATTRIBUTIONS = [
   {
     "file": "Lion waiting in Namibia.jpg",
@@ -428,5 +425,287 @@ const ATTRIBUTIONS = [
     "author": "Pexels",
     "license": "Pexels License",
     "source": "https://www.pexels.com/video/34492572/"
+  },
+  {
+    "file": "Leopardo — video (Pexels)",
+    "author": "Simone Dinoia",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/30972326/"
+  },
+  {
+    "file": "Leopardo — sonido (Freesound)",
+    "author": "messo1997",
+    "license": "CC0",
+    "source": "https://freesound.org/s/683661/"
+  },
+  {
+    "file": "Jaguar — video (Pexels)",
+    "author": "Jari Lobo",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/19210129/"
+  },
+  {
+    "file": "Jaguar — sonido (Freesound)",
+    "author": "Lewis.B.M",
+    "license": "CC0",
+    "source": "https://freesound.org/s/571287/"
+  },
+  {
+    "file": "Puma — video (Pexels)",
+    "author": "Nicky Pe",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/11038543/"
+  },
+  {
+    "file": "Puma — sonido (Freesound)",
+    "author": "XHwZQ6GV",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/536331/"
+  },
+  {
+    "file": "Oveja — video (Pexels)",
+    "author": "Evgeny Karev",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/32992989/"
+  },
+  {
+    "file": "Oveja — sonido (Freesound)",
+    "author": "SergioJbs",
+    "license": "CC0",
+    "source": "https://freesound.org/s/669872/"
+  },
+  {
+    "file": "Cerdo — video (Pexels)",
+    "author": "Magda Ehlers",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/3765312/"
+  },
+  {
+    "file": "Cerdo — sonido (Freesound)",
+    "author": "TheKingOfGeeks360",
+    "license": "CC0",
+    "source": "https://freesound.org/s/842313/"
+  },
+  {
+    "file": "Gallina — video (Pexels)",
+    "author": "Engin Altundağ",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/3370949/"
+  },
+  {
+    "file": "Gallina — sonido (Freesound)",
+    "author": "TheKingOfGeeks360",
+    "license": "CC0",
+    "source": "https://freesound.org/s/735767/"
+  },
+  {
+    "file": "Pato — video (Pexels)",
+    "author": "utopia 36",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/17533494/"
+  },
+  {
+    "file": "Pato — sonido (Freesound)",
+    "author": "OwennewO",
+    "license": "CC0",
+    "source": "https://freesound.org/s/719108/"
+  },
+  {
+    "file": "Conejo — video (Pexels)",
+    "author": "Efrem  Efre",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/31875420/"
+  },
+  {
+    "file": "Conejo — sonido (Freesound)",
+    "author": "policemouse67",
+    "license": "CC0",
+    "source": "https://freesound.org/s/697093/"
+  },
+  {
+    "file": "Cebra — video (Pexels)",
+    "author": "Magda Ehlers",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/6821205/"
+  },
+  {
+    "file": "Cebra — sonido (Freesound)",
+    "author": "TheKingOfGeeks360",
+    "license": "CC0",
+    "source": "https://freesound.org/s/850661/"
+  },
+  {
+    "file": "Rinoceronte — video (Pexels)",
+    "author": "Magda Ehlers",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/19806859/"
+  },
+  {
+    "file": "Rinoceronte — sonido (Freesound)",
+    "author": "bevibeldesign",
+    "license": "CC0",
+    "source": "https://freesound.org/s/350421/"
+  },
+  {
+    "file": "Hipopótamo — video (Pexels)",
+    "author": "Floating Rabbit",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/32861840/"
+  },
+  {
+    "file": "Hipopótamo — sonido (Freesound)",
+    "author": "LukeIRL",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/176103/"
+  },
+  {
+    "file": "Suricata — video (Pexels)",
+    "author": "Brixiv",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/26575569/"
+  },
+  {
+    "file": "Ballena — video (Pexels)",
+    "author": "Logan Voss",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/27941813/"
+  },
+  {
+    "file": "Ballena — sonido (Freesound)",
+    "author": "RebekahDay",
+    "license": "CC0",
+    "source": "https://freesound.org/s/171945/"
+  },
+  {
+    "file": "Tortuga marina — video (Pexels)",
+    "author": "JUN HO LEE",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/35569887/"
+  },
+  {
+    "file": "Tortuga marina — sonido (Freesound)",
+    "author": "DeqstersLab",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/848187/"
+  },
+  {
+    "file": "Tiburón — video (Pexels)",
+    "author": "Leo Salom",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/7997370/"
+  },
+  {
+    "file": "Pulpo — video (Pexels)",
+    "author": "JUN HO LEE",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/34105982/"
+  },
+  {
+    "file": "Pulpo — sonido (Freesound)",
+    "author": "hotpin7",
+    "license": "CC0",
+    "source": "https://freesound.org/s/840042/"
+  },
+  {
+    "file": "Águila — video (Pexels)",
+    "author": "Manoo Media",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/26673863/"
+  },
+  {
+    "file": "Águila — sonido (Freesound)",
+    "author": "mokasza",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/810192/"
+  },
+  {
+    "file": "Flamenco — video (Pexels)",
+    "author": "Dominik Gryzbon",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/30219093/"
+  },
+  {
+    "file": "Flamenco — sonido (Freesound)",
+    "author": "soundbytez",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/111039/"
+  },
+  {
+    "file": "Tucán — video (Pexels)",
+    "author": "Steven HAuse",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/13898921/"
+  },
+  {
+    "file": "Tucán — sonido (Freesound)",
+    "author": "soundbytez",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/97389/"
+  },
+  {
+    "file": "Lobo — video (Pexels)",
+    "author": "K",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/6093232/"
+  },
+  {
+    "file": "Lobo — sonido (Freesound)",
+    "author": "BrainClaim",
+    "license": "CC0",
+    "source": "https://freesound.org/s/267179/"
+  },
+  {
+    "file": "Zorro — video (Pexels)",
+    "author": "Dustin Hays",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/35628259/"
+  },
+  {
+    "file": "Zorro — sonido (Freesound)",
+    "author": "InspectorJ",
+    "license": "CC BY",
+    "source": "https://freesound.org/s/485009/"
+  },
+  {
+    "file": "Ciervo — video (Pexels)",
+    "author": "Townsend Walton",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/17994257/"
+  },
+  {
+    "file": "Ciervo — sonido (Freesound)",
+    "author": "ferventtorpor",
+    "license": "CC0",
+    "source": "https://freesound.org/s/696775/"
+  },
+  {
+    "file": "Ardilla — video (Pexels)",
+    "author": "Amazing3D",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/17109821/"
+  },
+  {
+    "file": "Ardilla — sonido (Freesound)",
+    "author": "TRP",
+    "license": "CC0",
+    "source": "https://freesound.org/s/574380/"
+  },
+  {
+    "file": "Gorila — video (Pexels)",
+    "author": "Nicky Pe",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/30606781/"
+  },
+  {
+    "file": "Gorila — sonido (Freesound)",
+    "author": "kfledman",
+    "license": "CC0",
+    "source": "https://freesound.org/s/205891/"
+  },
+  {
+    "file": "Perezoso — video (Pexels)",
+    "author": "Steven HAuse",
+    "license": "Pexels License",
+    "source": "https://www.pexels.com/video/13899315/"
   }
 ];

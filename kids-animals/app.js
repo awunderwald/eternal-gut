@@ -708,7 +708,20 @@
   }
 
   // ============ Arranque ============
+  // Fusiona los animales nuevos (extra.js) dentro de sus grupos.
+  function mergeExtraAnimals() {
+    if (typeof EXTRA_ANIMALS === "undefined") return;
+    Object.keys(EXTRA_ANIMALS).forEach((gid) => {
+      const cat = findCategory(gid);
+      if (!cat) return;
+      EXTRA_ANIMALS[gid].forEach((a) => {
+        if (!cat.animals.some((x) => x.id === a.id)) cat.animals.push(a);
+      });
+    });
+  }
+
   function init() {
+    mergeExtraAnimals();
     applyStaticI18n();
     renderHome();
     wire();

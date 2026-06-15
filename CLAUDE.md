@@ -203,7 +203,7 @@ que puedes ajustar cuando quieras.
 3. **Verificación de datos**: fuente por animal = **Wikipedia de la especie**
    (`sources.js`); todos los datos marcados **`verified: false`** hasta revisión
    humana. La ficha muestra el enlace de fuente con la marca "dato por verificar".
-4. **MVP**: el catálogo actual (**8 grupos · 15 animales**) sirve como lanzamiento
+4. **MVP**: el catálogo actual (**8 grupos · 40 animales**) sirve como lanzamiento
    mínimo. Ampliar grupos/animales es incremental.
 5. **Plataforma**: **Android primero** (Play, US$25 único) y **luego iPhone**
    (App Store, US$99/año). Capacitor mantiene ambos listos desde un solo código.
